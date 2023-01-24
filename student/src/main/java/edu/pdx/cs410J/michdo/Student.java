@@ -24,6 +24,15 @@ public class Student extends Human {
    */                                                                               
   public Student(String name, ArrayList<String> classes, double gpa, String gender) {
     super(name);
+    if(name == null) {
+      throw new NullPointerException();
+    }
+    if(classes == null) {
+      throw new NullPointerException();
+    }
+    if(gender == null) {
+      throw new NullPointerException();
+    }
   }
 
   /**                                                                               
