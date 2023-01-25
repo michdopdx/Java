@@ -3,6 +3,7 @@ package edu.pdx.cs410J.michdo;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class Project1Test {
 
   @Test
-  @Disabled
   void readmeCanBeReadAsResource() throws IOException {
     try (
       InputStream readme = Project1.class.getResourceAsStream("README.txt")
@@ -29,7 +29,7 @@ class Project1Test {
       assertThat(readme, not(nullValue()));
       BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
       String line = reader.readLine();
-      assertThat(line, containsString("This is a README file!"));
+      assertThat(line, containsString("********************************"));
     }
   }
 
@@ -45,21 +45,16 @@ class Project1Test {
   }
 
   @Test
-  @Disabled
   void checkForValidDate() {
     boolean value;
     value = Project1.isValidDateAndTime("09/16/2000");
     value = Project1.isValidDateAndTime("9/6/2000");
-    value = Project1.isValidDateAndTime("09/06/2000");
+    value = Project1.isValidDateAndTime("09/06/0001");
     assert (value == true);
   }
   @Test
-  @Disabled
   void checkForInvalidDate() {
-    boolean value;
-    value = Project1.isValidDateAndTime("9/90/2000");
-    value = Project1.isValidDateAndTime("09/06/10");
-    assert (value == false);
+    assertThrows(IllegalArgumentException.class, ()-> Project1.isValidDateAndTime("09/06/001"));
   }
 
   @Test
@@ -70,12 +65,11 @@ class Project1Test {
     assert (value == true);
   }
   @Test
-  @Disabled
   void checkForInvalidTime(){
-    boolean value;
-    value = Project1.isValidDateAndTime("25:10");
-    value = Project1.isValidDateAndTime("25:60");
-    assert (value == false);
+    assertThrows(InvalidParameterException.class, ()-> Project1.isValidDateAndTime("10:70"));
+    assertThrows(InvalidParameterException.class, ()-> Project1.isValidDateAndTime("50:40"));
+    assertThrows(InvalidParameterException.class, ()-> Project1.isValidDateAndTime("50:70"));
+
   }
 
 

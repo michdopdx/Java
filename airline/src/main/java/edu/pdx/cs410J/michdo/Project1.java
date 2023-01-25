@@ -46,11 +46,11 @@ public class Project1 {
         int days;
         int years;
 
-        if (checkForInt(month) && checkForInt(day) && checkForInt(year)) {
+        if (checkForInt(month) && checkForInt(day) && (checkForInt(year) && year.length() == 4)) {
           months = Integer.parseInt(month);
           days = Integer.parseInt(day);
           years = Integer.parseInt(year);
-          if (months <= 12 && days <= 31 && years == 2023) {
+          if (months <= 12 && days <= 31 && years > 0) {
             return true;
           } else {
             throw new InvalidParameterException();
@@ -134,12 +134,23 @@ public class Project1 {
       if(args.length - options > 8) {
         System.err.println("The Number Of Arguments Has Exceeded The Limits");
       }
-
       else {
         for (String arg : args) {
           if (arg.contains("README") || arg.contains("print")) {
             if (arg.equals("-README")) {
-              hasREADME = true;
+              try{
+                InputStream readme = Project1.class.getResourceAsStream("README.txt");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
+                String line;
+                while((line = reader.readLine()) != null)
+                {
+                  System.out.println(line);
+                }
+                return;
+              }catch (IOException e) {
+                System.err.println("README Not Found");
+                return;
+              }
             } else if (arg.equals("-print")) {
               hasPrint = true;
             }
@@ -197,21 +208,6 @@ public class Project1 {
           System.err.println(e.getMessage());
           return;
         }
-        if (hasREADME) {
-          try{
-            InputStream readme = Project1.class.getResourceAsStream("README.txt");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
-            String line;
-            while((line = reader.readLine()) != null)
-            {
-              System.out.println(line);
-            }
-          }catch (IOException e) {
-            System.err.println("README Not Found");
-            return;
-          }
-        }
-
         if (hasPrint) {
           Collection<Flight> listOfFlights = airline.getFlights();
           for (Flight flights : listOfFlights) {

@@ -62,12 +62,10 @@ class Project1IT extends InvokeMainTestCase {
         assertThat(result.getTextWrittenToStandardError(),containsString("The Number Of Arguments Has Exceeded The Limits"));
     }
     @Test
-    @Disabled
     void testCommandLineWithOutName(){
         MainMethodResult result = invokeMain("-print","100","abc","9/16/2023","10:30","def","9/16/2023","12:00");
         assertThat(result.getTextWrittenToStandardError(),containsString("Name of airline is invalid or has not been entered"));
     }
-
     @Test
     void testCommandLineWithOutNumber(){
         MainMethodResult result = invokeMain("-print","JetBlue","abc","9/16/2023","10:30","def","9/16/2023","12:00");
@@ -90,9 +88,18 @@ class Project1IT extends InvokeMainTestCase {
         MainMethodResult result = invokeMain("-print","JetBlue","100","9/16/2023","10:30","def","9/16/2023","12:00");
         assertThat(result.getTextWrittenToStandardError(),containsString("Missing Required Argument"));
     }
-
+    @Test
+    void testCommandLineWithInvalidSrc(){
+        MainMethodResult result = invokeMain("-print","JetBlue","100","abff","9/16/2023","10:30","def","9/16/2023","12:30");
+        assertThat(result.getTextWrittenToStandardError(),containsString("Missing Required Argument"));
+    }
     @Test
     void testCommandLineWithoutArrival(){
+        MainMethodResult result = invokeMain("-print","JetBlue","100","abc","9/16/2023","10:30","9/16/2023","12:00");
+        assertThat(result.getTextWrittenToStandardError(),containsString("Missing Required Argument"));
+    }
+    @Test
+    void testCommandLineWithInvalidArrival(){
         MainMethodResult result = invokeMain("-print","JetBlue","100","abc","9/16/2023","10:30","9/16/2023","12:00");
         assertThat(result.getTextWrittenToStandardError(),containsString("Missing Required Argument"));
     }
@@ -120,6 +127,7 @@ class Project1IT extends InvokeMainTestCase {
         MainMethodResult result = invokeMain("-print","JetBlue","100","abc","9/16/2023","10:30","def","9/16/2023");
         assertThat(result.getTextWrittenToStandardError(),containsString("Missing Data or Time from departure or arrival"));
     }
+
 
 
 

@@ -5,6 +5,9 @@ import edu.pdx.cs410J.AbstractFlight;
 import java.security.InvalidParameterException;
 import java.util.MissingFormatArgumentException;
 
+/** Class representation of a flight.
+ * @author Michael Do
+ */
 public class Flight extends AbstractFlight {
 
   private int flightNumber;
@@ -12,6 +15,9 @@ public class Flight extends AbstractFlight {
   private String departure;
   private String destination;
   private String arrival;
+  /**
+   * Data needed to build a Flight.
+   */
 
   /**
    * Flight constructor that creates a flight object from given arguments.
@@ -49,7 +55,6 @@ public class Flight extends AbstractFlight {
     checkNullValue(ar);
     checkFormatForDataAndTime(ar);
     this.arrival = ar;
-
   }
 
   /**

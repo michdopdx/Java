@@ -7,9 +7,16 @@ import javax.management.InstanceNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Class representation of an Airline.
+ * @author Michael Do
+ */
 public class Airline extends AbstractAirline<Flight> {
   private final String name;
   Collection <Flight> listOfFlights = new ArrayList<Flight>();
+  /**
+   * Data representation of an Airline
+   */
 
   /**
    * Airline constructor which creates an Airline object with a given name.
