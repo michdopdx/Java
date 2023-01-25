@@ -22,7 +22,17 @@ import java.util.MissingFormatArgumentException;
  */
 public class Project1 {
 
-
+  /**
+   * Returns true or false depending on if the argument passes is a valid date or time.
+   * The argument will contain a colon which indicates time, or / for dates.
+   * The dateAndTime will then be parsed into their respective components.
+   * The components will then be verified.
+   *
+   * @throws IllegalArgumentException If the components in dateAndTime are not numbers.
+   * @throws InvalidParameterException If the numbers exceed expected values for each component
+   * @param dateAndTime A string that contains either a "/" or a ":"
+   * @return True if this string is a valid date or time, false otherwise.
+   */
   static boolean isValidDateAndTime(String dateAndTime) {
     if (dateAndTime.contains("/")) { //Checking for the data
       int firstSlash = dateAndTime.indexOf("/");
@@ -71,6 +81,12 @@ public class Project1 {
     return false;
   }
 
+  /**
+   * Returns true if the given argument check can be turned into an int, and false otherwise.
+   *
+   * @param check A string that is being checked if it can be turned into an int
+   * @return True if this string can be turned into an int, else false.
+   */
   public static boolean checkForInt(String check) {
     try {
       Integer.parseInt(check);
@@ -197,7 +213,6 @@ public class Project1 {
         }
 
         if (hasPrint) {
-
           Collection<Flight> listOfFlights = airline.getFlights();
           for (Flight flights : listOfFlights) {
             System.out.println(airline.getName() + ": " + flights.toString());
