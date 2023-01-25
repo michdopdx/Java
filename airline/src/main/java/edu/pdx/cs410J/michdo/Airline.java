@@ -12,10 +12,10 @@ public class Airline extends AbstractAirline<Flight> {
   Collection <Flight> listOfFlights = new ArrayList<Flight>();
 
   /**
-   * Airline Constructor: Creates an Airline object with a given name
+   * Airline constructor which creates an Airline object with a given name.
    *
-   *
-   * @param name
+   * @param name Is a string that will name the airline
+   * @throws NullPointerException If String is null.
    */
   public Airline(String name) {
     if(name == null) {
@@ -31,6 +31,7 @@ public class Airline extends AbstractAirline<Flight> {
 
   /**
    * Adds a given flight passed as an argument to a collect of flights for an airline.
+   *
    * @param flight Is a populated flight object.
    */
   @Override
@@ -39,6 +40,8 @@ public class Airline extends AbstractAirline<Flight> {
   }
 
   /**
+   * Will return the collection of flights.
+   *
    * @return the collection of flights for a specific airline.
    */
   @Override

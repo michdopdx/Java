@@ -28,10 +28,10 @@ public class Project1 {
    * The dateAndTime will then be parsed into their respective components.
    * The components will then be verified.
    *
-   * @throws IllegalArgumentException If the components in dateAndTime are not numbers.
-   * @throws InvalidParameterException If the numbers exceed expected values for each component
-   * @param dateAndTime A string that contains either a "/" or a ":"
+   * @param dateAndTime A string that contains either a "/" or a ":".
    * @return True if this string is a valid date or time, false otherwise.
+   * @throws IllegalArgumentException If the components in dateAndTime are not numbers.
+   * @throws InvalidParameterException If the numbers exceed expected values for each component.
    */
   static boolean isValidDateAndTime(String dateAndTime) {
     if (dateAndTime.contains("/")) { //Checking for the data
