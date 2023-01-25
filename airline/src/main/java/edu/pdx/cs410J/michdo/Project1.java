@@ -6,6 +6,10 @@ import org.checkerframework.checker.units.qual.A;
 
 import javax.management.InstanceNotFoundException;
 import javax.sound.midi.Soundbank;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -88,7 +92,21 @@ public class Project1 {
     String arrival = "";
 
     if (args.length == 0) {
-      System.err.println("Missing command line arguments");
+      System.err.println("It seems that you have not entered any information about the Airline or Flight Please retry again.\n" +
+              "Format: java -jar target/airline-2023.0.0.jar [options] <args> \n " +
+              "Options(Are optional)\n " +
+              "*: -README -> Prints out the README \n " +
+              "*: -print  -> Prints the description of the flight \n" +
+              "Args: (IN THIS ORDER) \n" +
+              "*: Airline Name -> Name of the airline being added \n" +
+              "*: Flight Number-> The number of the Flight being added \n" +
+              "*: Source       -> 3-letter code of departure airport \n" +
+              "*: Departure data -> The date of departure(Formatted as mm/dd/yyyy)\n" +
+              "*: Departure time -> The time of departure(Formatted as hh:mm \n" +
+              "*: Destination ->  3-letter code of destination airport \n" +
+              "*: Arrival data -> The date of arrival(Formatted as mm/dd/yyyy) \n" +
+              "*: Departure time -> The time of departure(Formatted as hh:mm \n " +
+              "An example: java -jar target/airline-2023.0.0.jar -print JetBlue 100 abc 9/16/2023 10:30 def 9/16/2023 12:30\n");
     } else {
       for(int i = 0; i < args.length; i++)
       {
@@ -96,6 +114,7 @@ public class Project1 {
           options ++;
         }
       }
+
       if(args.length - options > 8) {
         System.err.println("The Number Of Arguments Has Exceeded The Limits");
       }
@@ -107,8 +126,7 @@ public class Project1 {
               hasREADME = true;
             } else if (arg.equals("-print")) {
               hasPrint = true;
-            } else
-              System.err.println("Possible options are \"-README\" or \"-print\"");
+            }
           } else if (arg.contains(" ") || name == null && arg.length() > 3 && (!isValidDateAndTime(arg) && !checkForInt(arg)) ) {
             name = arg;
           } else if (checkForInt(arg) && flightNum == -1) {
@@ -161,9 +179,21 @@ public class Project1 {
           return;
         } catch (MissingFormatArgumentException e) {
           System.err.println(e.getMessage());
+          return;
         }
         if (hasREADME) {
-          System.out.println("This is going to be the read me");
+          try{
+            InputStream readme = Project1.class.getResourceAsStream("README.txt");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
+            String line;
+            while((line = reader.readLine()) != null)
+            {
+              System.out.println(line);
+            }
+          }catch (IOException e) {
+            System.err.println("README Not Found");
+            return;
+          }
         }
 
         if (hasPrint) {

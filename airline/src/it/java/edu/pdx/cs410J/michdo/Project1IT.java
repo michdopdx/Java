@@ -26,24 +26,30 @@ class Project1IT extends InvokeMainTestCase {
 
 
   @Test
-  @Disabled
   void testNoCommandLineArguments() {
     MainMethodResult result = invokeMain();
-    assertThat(result.getTextWrittenToStandardError(), containsString("Missing command line arguments"));
+    assertThat(result.getTextWrittenToStandardError(), containsString("It seems that you have not entered any information about the Airline or Flight Please retry again.\n" +
+            "Format: java -jar target/airline-2023.0.0.jar [options] <args> \n " +
+            "Options(Are optional)\n " +
+            "*: -README -> Prints out the README \n " +
+            "*: -print  -> Prints the description of the flight \n" +
+            "Args: (IN THIS ORDER) \n" +
+            "*: Airline Name -> Name of the airline being added \n" +
+            "*: Flight Number-> The number of the Flight being added \n" +
+            "*: Source       -> 3-letter code of departure airport \n" +
+            "*: Departure data -> The date of departure(Formatted as mm/dd/yyyy)\n" +
+            "*: Departure time -> The time of departure(Formatted as hh:mm \n" +
+            "*: Destination ->  3-letter code of destination airport \n" +
+            "*: Arrival data -> The date of arrival(Formatted as mm/dd/yyyy) \n" +
+            "*: Departure time -> The time of departure(Formatted as hh:mm \n " +
+            "An example: java -jar target/airline-2023.0.0.jar -print JetBlue 100 abc 9/16/2023 10:30 def 9/16/2023 12:30\n"));
   }
 
   @Test
-  @Disabled
     void testIncorrectOptionForREADMEAndPrint(){
-      MainMethodResult result = invokeMain("-readme");
-      assertThat(result.getTextWrittenToStandardError(), containsString("Possible options are \"-README\" or \"-print\""));
+      MainMethodResult result = invokeMain("-readme","JetBlue","100","abc","9/16/2023","10:30","def","9/16/2023","12:00");
+      assertThat(result.getTextWrittenToStandardError(), containsString("The Number Of Arguments Has Exceeded The Limits"));
   }
-    @Test
-    @Disabled
-    void testCorrectOptionForREADMEAndPrint(){
-        MainMethodResult result = invokeMain("-README");
-        assertThat(result.getTextWrittenToStandardOut(), containsString("this is the read me"));
-    }
 
     @Test
     void testWithPrefectCommandLine(){

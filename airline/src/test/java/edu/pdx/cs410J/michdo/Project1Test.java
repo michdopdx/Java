@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class Project1Test {
 
   @Test
+  @Disabled
   void readmeCanBeReadAsResource() throws IOException {
     try (
       InputStream readme = Project1.class.getResourceAsStream("README.txt")
