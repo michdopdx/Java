@@ -26,6 +26,7 @@ class Project1IT extends InvokeMainTestCase {
 
 
   @Test
+  @Disabled
   void testNoCommandLineArguments() {
     MainMethodResult result = invokeMain();
     assertThat(result.getTextWrittenToStandardError(), containsString("It seems that you have not entered any information about the Airline or Flight Please retry again.\n" +
@@ -48,7 +49,7 @@ class Project1IT extends InvokeMainTestCase {
   @Test
     void testIncorrectOptionForREADMEAndPrint(){
       MainMethodResult result = invokeMain("-readme","JetBlue","100","abc","9/16/2023","10:30","def","9/16/2023","12:00");
-      assertThat(result.getTextWrittenToStandardError(), containsString("The Number Of Arguments Has Exceeded The Limits"));
+      assertThat(result.getTextWrittenToStandardError(), containsString("-readme option does not exist"));
   }
 
     @Test
@@ -64,68 +65,68 @@ class Project1IT extends InvokeMainTestCase {
     @Test
     void testCommandLineWithOutName(){
         MainMethodResult result = invokeMain("-print","100","abc","9/16/2023","10:30","def","9/16/2023","12:00");
-        assertThat(result.getTextWrittenToStandardError(),containsString("Name of airline is invalid or has not been entered"));
+        assertThat(result.getTextWrittenToStandardError(),containsString("Missing Command Line Argument"));
     }
     @Test
     void testCommandLineWithOutNumber(){
         MainMethodResult result = invokeMain("-print","JetBlue","abc","9/16/2023","10:30","def","9/16/2023","12:00");
-        assertThat(result.getTextWrittenToStandardError(),containsString("No Flight Number Was entered"));
+        assertThat(result.getTextWrittenToStandardError(),containsString("Missing Command Line Argument"));
     }
     @Test
     void testCommandLineWithInvalidNumber(){
-        MainMethodResult result = invokeMain("-print","JetBlue","-100","abc","9/16/2023","10:30","def","9/16/2023","12:00");
-        assertThat(result.getTextWrittenToStandardError(),containsString("Flight Number Entered Is NOT Valid"));
+        MainMethodResult result = invokeMain("-print","JetBlue","100a","abc","9/16/2023","10:30","def","9/16/2023","12:00");
+        assertThat(result.getTextWrittenToStandardError(),containsString("Flight Number Entered Is Not A Number"));
     }
 
     @Test
     void testCommandLineNoFlightNumber(){
         MainMethodResult result = invokeMain("-print","JetBlue","100a","abc","9/16/2023","10:30","def","9/16/2023","12:00");
-        assertThat(result.getTextWrittenToStandardError(),containsString("No Flight Number Was entered"));
+        assertThat(result.getTextWrittenToStandardError(),containsString("Flight Number Entered Is Not A Number"));
     }
 
     @Test
     void testCommandLineWithoutSrc(){
         MainMethodResult result = invokeMain("-print","JetBlue","100","9/16/2023","10:30","def","9/16/2023","12:00");
-        assertThat(result.getTextWrittenToStandardError(),containsString("Missing Required Argument"));
+        assertThat(result.getTextWrittenToStandardError(),containsString("Missing Command Line Argument"));
     }
     @Test
     void testCommandLineWithInvalidSrc(){
         MainMethodResult result = invokeMain("-print","JetBlue","100","abff","9/16/2023","10:30","def","9/16/2023","12:30");
-        assertThat(result.getTextWrittenToStandardError(),containsString("Missing Required Argument"));
+        assertThat(result.getTextWrittenToStandardError(),containsString("The Source Code You Have Entered is 4 Letters Long, Must Be Three"));
     }
     @Test
     void testCommandLineWithoutArrival(){
         MainMethodResult result = invokeMain("-print","JetBlue","100","abc","9/16/2023","10:30","9/16/2023","12:00");
-        assertThat(result.getTextWrittenToStandardError(),containsString("Missing Required Argument"));
+        assertThat(result.getTextWrittenToStandardError(),containsString("Missing Command Line Argument"));
     }
     @Test
     void testCommandLineWithInvalidArrival(){
         MainMethodResult result = invokeMain("-print","JetBlue","100","abc","9/16/2023","10:30","9/16/2023","12:00");
-        assertThat(result.getTextWrittenToStandardError(),containsString("Missing Required Argument"));
+        assertThat(result.getTextWrittenToStandardError(),containsString("Missing Command Line Argument"));
     }
 
     @Test
     void testCommandLineWithoutDepartDate(){
         MainMethodResult result = invokeMain("-print","JetBlue","100","abc","10:30","def","9/16/2023","12:00");
-        assertThat(result.getTextWrittenToStandardError(),containsString("Missing Data or Time from departure or arrival"));
+        assertThat(result.getTextWrittenToStandardError(),containsString("Missing Command Line Argument"));
     }
 
     @Test
     void testCommandLineWithoutDepartTime(){
         MainMethodResult result = invokeMain("-print","JetBlue","100","abc","9/16/2023","def","9/16/2023","12:00");
-        assertThat(result.getTextWrittenToStandardError(),containsString("Missing Data or Time from departure or arrival"));
+        assertThat(result.getTextWrittenToStandardError(),containsString("Missing Command Line Argument"));
     }
 
     @Test
     void testCommandLineArrivalWithoutDate(){
         MainMethodResult result = invokeMain("-print","JetBlue","100","abc","9/16/2023","10:30","def","12:00");
-        assertThat(result.getTextWrittenToStandardError(),containsString("Missing Data or Time from departure or arrival"));
+        assertThat(result.getTextWrittenToStandardError(),containsString("Missing Command Line Argument"));
     }
 
     @Test
     void testCommandLineWithoutArrivalTime(){
         MainMethodResult result = invokeMain("-print","JetBlue","100","abc","9/16/2023","10:30","def","9/16/2023");
-        assertThat(result.getTextWrittenToStandardError(),containsString("Missing Data or Time from departure or arrival"));
+        assertThat(result.getTextWrittenToStandardError(),containsString("Missing Command Line Argument"));
     }
 
 

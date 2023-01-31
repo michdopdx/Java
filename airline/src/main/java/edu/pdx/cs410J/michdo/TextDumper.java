@@ -2,9 +2,8 @@ package edu.pdx.cs410J.michdo;
 
 import edu.pdx.cs410J.AirlineDumper;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Writer;
+import java.io.*;
+import java.util.Collection;
 
 /**
  * A skeletal implementation of the <code>TextDumper</code> class for Project 2.
@@ -16,14 +15,25 @@ public class TextDumper implements AirlineDumper<Airline> {
     this.writer = writer;
   }
 
+
+
   @Override
   public void dump(Airline airline) {
-    try (
-      PrintWriter pw = new PrintWriter(this.writer)
-      ) {
-      pw.println(airline.getName());
+    Collection<Flight> listOfFlights = airline.getFlights();
+    PrintWriter pw = new PrintWriter(this.writer);
 
+    try {
+      pw.println(airline.getName());
+      for(Flight flight:listOfFlights) {
+        pw.println(flight.getNumber() + "|" +
+                flight.getSource() + "|" +
+                flight.getDepartureString() + "|" +
+                flight.getDestination() + "|" +
+                flight.getArrivalString());
+      }
       pw.flush();
+    } catch (Exception e) {
+
     }
   }
 }

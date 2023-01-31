@@ -46,14 +46,14 @@ public class Flight extends AbstractFlight {
     this.source = src;
 
     checkNullValue(depart);
-    checkFormatForDataAndTime(depart);
+    checkFormatForDateAndTime(depart);
     this.departure = depart;
 
     checkNullValue(dest);
     this.destination = dest;
 
     checkNullValue(ar);
-    checkFormatForDataAndTime(ar);
+    checkFormatForDateAndTime(ar);
     this.arrival = ar;
   }
 
@@ -73,12 +73,12 @@ public class Flight extends AbstractFlight {
   /**
    * Verifies if the date and time string has both a slash and colon.
    * <p>
-   * @param dataTime A string that contains the date and the time
+   * @param dateTime A string that contains the date and the time
    * @throws MissingFormatArgumentException If the argument string does not contain slash or a colon.
    */
-  private static void checkFormatForDataAndTime(String dataTime) {
-    if(!dataTime.contains("/") || !dataTime.contains(":")) {
-      throw new MissingFormatArgumentException("Missing Data or Time from departure or arrival");
+  private static void checkFormatForDateAndTime(String dateTime) {
+    if(!dateTime.contains("/") || !dateTime.contains(":")) {
+      throw new MissingFormatArgumentException("Missing Date or Time from departure or arrival");
     }
   }
   @Override

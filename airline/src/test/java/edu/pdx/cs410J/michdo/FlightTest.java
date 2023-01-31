@@ -13,8 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  */
 public class FlightTest {
 
-
-
   /**
    * This unit test will need to be modified (likely deleted) as you implement
    * your project.
