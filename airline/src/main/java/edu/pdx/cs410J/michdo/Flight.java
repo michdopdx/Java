@@ -81,23 +81,47 @@ public class Flight extends AbstractFlight {
       throw new MissingFormatArgumentException("Missing Date or Time from departure or arrival");
     }
   }
+
+  /**
+   * Getter which gets the flight number of a flight.
+   * @return Flight number.
+   */
   @Override
   public int getNumber() {
     return this.flightNumber;
   }
+
+  /**
+   * Getter which gets the source code of a flight.
+   * @return Three letter source code.
+   */
   @Override
   public String getSource() {
     return this.source;
   }
+
+  /**
+   * Getter which gets the date and time of departure for a flight.
+   * @return Date and time of departure.
+   */
   @Override
   public String getDepartureString() {
     return this.departure;
   }
+
+  /**
+   * Getter which gets the destination code of a flight.
+   * @return Three letter destination code.
+   */
   @Override
   public String getDestination() {
     return this.destination;
   }
 
+  /**
+   * Getter which gets the date and time of arrival for a flight.
+   * @return Date and time of arrival.
+   */
   @Override
   public String getArrivalString() {
     return this.arrival;

@@ -67,10 +67,19 @@ class Project2Test {
     assertThrows(InvalidParameterException.class, ()-> Project2.isValidDateAndTime("10:70"));
     assertThrows(InvalidParameterException.class, ()-> Project2.isValidDateAndTime("50:40"));
     assertThrows(InvalidParameterException.class, ()-> Project2.isValidDateAndTime("50:70"));
-
   }
 
-
-
+  @Test
+  void checkForInvalidCode() {
+    boolean value;
+    value = Project2.checkValidCode("A2B");
+    assert (value == false);
+  }
+  @Test
+  void checkForValidCode() {
+    boolean value;
+    value = Project2.checkValidCode("ABC");
+    assert (value == true);
+  }
 
 }

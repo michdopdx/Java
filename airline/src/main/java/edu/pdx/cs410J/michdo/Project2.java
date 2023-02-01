@@ -84,6 +84,12 @@ public class Project2 {
     }
   }
 
+  /**
+   * Checks if a given string contains a number. If a number is present return false, else true.
+   *
+   * @param code Will search this string for numbers.
+   * @return True if no number is fond in string else false.
+   */
   public static boolean checkValidCode (String code)
   {
     char[] flightCode = code.toCharArray();
@@ -127,7 +133,6 @@ public class Project2 {
               "*: Arrival time -> The time of departure(Formatted as hh:mm \n " +
               "An example: java -jar target/airline-2023.0.0.jar -print JetBlue 100 abc 9/16/2023 10:30 def 9/16/2023 12:30\n");
     } else {
-
       for (int i = 0; i < args.length; i++) {
         if (args[i].contains("-")) {
           if (args[i].contains("-textFile")) {
@@ -143,7 +148,6 @@ public class Project2 {
           options++;
         }
       }
-
       String[] option = Arrays.copyOfRange(args, 0, options);
       String[] arguments = Arrays.copyOfRange(args, options, args.length);
 
@@ -274,7 +278,6 @@ public class Project2 {
       if(hasFile) {
         File airlineFile = new File(file);
 
-        //check if the file is empty of the name matches
         try {
           FileReader readFromFile = new FileReader(file);
           TextParser parseIntoObject = new TextParser(readFromFile);
@@ -289,7 +292,8 @@ public class Project2 {
             return;
           }
         }catch (Exception e) {
-
+          System.err.println(e.getMessage());
+          return;
         }
         try{
           FileReader readFromFile = new FileReader(file);
@@ -298,6 +302,7 @@ public class Project2 {
           Collection<Flight> Flights = airlineFromFile.getFlights();
         }catch (ParserException e) {
           System.err.println(e.getMessage());
+          return;
         }catch (FileNotFoundException e) {
 
         }

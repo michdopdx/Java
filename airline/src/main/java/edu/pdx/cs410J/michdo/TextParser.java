@@ -6,15 +6,29 @@ import edu.pdx.cs410J.ParserException;
 import java.io.*;
 
 /**
- * A skeletal implementation of the <code>TextParser</code> class for Project 2.
+ * Class <code>TextParser</code> used to read Airline and its Flights from a file.
+ * @author Michael Do
  */
 public class TextParser implements AirlineParser<Airline> {
   private final Reader reader;
+  /**
+   * File reader which reads characters from text files.
+   */
 
+
+  /**
+   * This constructor will create a new instance of <code>TextParser</code>
+   * @param reader File Reader
+   */
   public TextParser(Reader reader) {
     this.reader = reader;
   }
 
+  /**
+   * Will search file for given name, if the name is found or the file is empty return true.
+   * @param name Name of the Airline
+   * @return True if name is found or the file is empty, false otherwise.
+   */
   public boolean checkAirline(String name) {
     try {
       BufferedReader br = new BufferedReader(this.reader);
@@ -27,11 +41,16 @@ public class TextParser implements AirlineParser<Airline> {
     }
     return false;
   }
+
+  /**
+   * Will parse a file and create and airline and its flights
+   * @return A new Airline created from parsing file.
+   * @throws ParserException Will be thrown if NO Airline was found.
+   */
   @Override
   public Airline parse() throws ParserException {
     String line;
     String airlineName = null;
-
     String flightNumber = null;
     String flightSrc = null;
     String flightDepart = null;

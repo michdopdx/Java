@@ -6,15 +6,23 @@ import java.io.*;
 import java.util.Collection;
 
 /**
- * A skeletal implementation of the <code>TextDumper</code> class for Project 2.
+ * Class <code>TextDumper</code> used to write Airline and its Flights into file
+ *
+ * @author Michael Do
  */
 public class TextDumper implements AirlineDumper<Airline> {
   private final Writer writer;
+  /**
+   * File writer which writes characters to text files.
+   */
 
+  /**
+   * This constructor creates an instance of <code>TextDumper</code>
+   * @param writer File writer which writes characters to text files.
+   */
   public TextDumper(Writer writer) {
     this.writer = writer;
   }
-
 
   /**
    * Writes contents from a given airline into a file
