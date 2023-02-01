@@ -16,7 +16,11 @@ public class TextDumper implements AirlineDumper<Airline> {
   }
 
 
-
+  /**
+   * Writes contents from a given airline into a file
+   *
+   * @param airline Airline object which will be stored into file
+   */
   @Override
   public void dump(Airline airline) {
     Collection<Flight> listOfFlights = airline.getFlights();

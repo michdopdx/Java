@@ -41,8 +41,6 @@ public class TextParser implements AirlineParser<Airline> {
     Flight flight = null;
 
     BufferedReader br = new BufferedReader(this.reader);
-
-
     try {
       while((line = br.readLine()) != null) {
 

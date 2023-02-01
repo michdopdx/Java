@@ -26,6 +26,20 @@ public class TextDumperTest {
   }
 
   @Test
+  void addFlightToTextFile() {
+
+    String airlineName = "Test Airline";
+    Airline airline = new Airline(airlineName);
+
+    Flight flight = new Flight(100,"pfx", "9/9/2009 1:00", "pff", "9/9/2009 2:00" );
+    airline.addFlight(flight);
+    StringWriter sw = new StringWriter();
+    TextDumper dumper = new TextDumper(sw);
+    dumper.dump(airline);
+  }
+
+
+  @Test
   void canParseTextWrittenByTextDumper(@TempDir File tempDir) throws IOException, ParserException {
     String airlineName = "Test Airline";
     Airline airline = new Airline(airlineName);

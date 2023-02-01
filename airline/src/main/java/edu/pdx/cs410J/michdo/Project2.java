@@ -1,21 +1,15 @@
 package edu.pdx.cs410J.michdo;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import edu.pdx.cs410J.ParserException;
-import org.checkerframework.checker.units.qual.A;
 
-import javax.management.InstanceNotFoundException;
-import javax.sound.midi.Soundbank;
 import java.io.*;
-import java.lang.reflect.Array;
 import java.security.InvalidParameterException;
 import java.util.*;
 
 /**
  * The main class for the CS410J airline Project
  */
-public class Project1 {
+public class Project2 {
 
   /**
    * Returns true or false depending on if the argument passes is a valid date or time.
@@ -137,6 +131,13 @@ public class Project1 {
       for (int i = 0; i < args.length; i++) {
         if (args[i].contains("-")) {
           if (args[i].contains("-textFile")) {
+            if(!args[i +1].contains(".txt")) {
+              file = args[i +1] + ".txt";
+              args[i +1] = file;
+            }
+            else{
+              file = args[i +1];
+            }
             options++;
           }
           options++;
@@ -166,7 +167,7 @@ public class Project1 {
           }
           if (op.equals("-README")) {
             try {
-              InputStream readme = Project1.class.getResourceAsStream("README.txt");
+              InputStream readme = Project2.class.getResourceAsStream("README.txt");
               BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
               String line;
               while ((line = reader.readLine()) != null) {
@@ -179,12 +180,7 @@ public class Project1 {
             }
           }
           if (op.equals("-textFile")) {
-            if (option[op.indexOf("-textFile") + 1].contains(".txt")) {
-              file = option[op.indexOf("-textFile") + 1];
-            } else {
-              file = option[op.indexOf("-textFile") + 1] + ".txt";
-              hasFile = true;
-            }
+            hasFile = true;
           }
         }
         else {
@@ -194,7 +190,6 @@ public class Project1 {
       }
 
       name = arguments[0];
-
       if (checkForInt(arguments[1])) {
         flightNum = Integer.parseInt(arguments[1]);
       } else {
@@ -279,12 +274,10 @@ public class Project1 {
       if(hasFile) {
         File airlineFile = new File(file);
 
-
         //check if the file is empty of the name matches
         try {
           FileReader readFromFile = new FileReader(file);
           TextParser parseIntoObject = new TextParser(readFromFile);
-          System.out.println(airline.getName());
           if(parseIntoObject.checkAirline(airline.getName()))
           {
             FileWriter fw = new FileWriter(airlineFile);
@@ -303,9 +296,6 @@ public class Project1 {
           TextParser parseIntoObject = new TextParser(readFromFile);
           airlineFromFile = parseIntoObject.parse();
           Collection<Flight> Flights = airlineFromFile.getFlights();
-          for (Flight flights : Flights) {
-            System.out.println("Airline from file " + airline.getName() + ": " + flights.toString());
-          }
         }catch (ParserException e) {
           System.err.println(e.getMessage());
         }catch (FileNotFoundException e) {
