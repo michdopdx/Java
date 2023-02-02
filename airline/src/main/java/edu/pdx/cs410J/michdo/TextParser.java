@@ -29,17 +29,20 @@ public class TextParser implements AirlineParser<Airline> {
    * @param name Name of the Airline
    * @return True if name is found or the file is empty, false otherwise.
    */
-  public boolean checkAirline(String name) {
+  public int checkAirline(String name) {
     try {
       BufferedReader br = new BufferedReader(this.reader);
       String line = br.readLine();
-      if(br.readLine() == null || line.equals(name)) {
-        return true;
+      if(br.readLine() == null) {
+        return 1;
+      }
+      if(line.equals(name)) {
+        return 2;
       }
     }catch (Exception e) {
 
     }
-    return false;
+    return 0;
   }
 
   /**
@@ -61,8 +64,7 @@ public class TextParser implements AirlineParser<Airline> {
 
     BufferedReader br = new BufferedReader(this.reader);
     try {
-      while((line = br.readLine()) != null) {
-
+      while ((line = br.readLine()) != null) {
         if (!line.contains("|")) {
           airlineName = line;
           airline = new Airline(airlineName);
@@ -75,22 +77,20 @@ public class TextParser implements AirlineParser<Airline> {
           flightDest = flightData[3];
           flightArrival = flightData[4];
         }
-      }
-      if(airlineName != null) {
-        try {
-          flight = new Flight(Integer.parseInt(flightNumber), flightSrc, flightDepart, flightDest, flightArrival);
-        } catch (Exception e) {
+        if (airlineName != null) {
+          try {
+            flight = new Flight(Integer.parseInt(flightNumber), flightSrc, flightDepart, flightDest, flightArrival);
+            airline.addFlight(flight);
+          } catch (Exception e) {
 
+          }
         }
       }
-      else {
+      if(airlineName == null)
+      {
         throw new ParserException("");
       }
-
-      airline.addFlight(flight);
       return airline;
-
-
     } catch (IOException e) {
       throw new ParserException("While parsing airline text", e);
     }

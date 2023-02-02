@@ -1,7 +1,6 @@
 package edu.pdx.cs410J.michdo;
 
 import edu.pdx.cs410J.ParserException;
-
 import java.io.*;
 import java.security.InvalidParameterException;
 import java.util.*;
@@ -150,15 +149,10 @@ public class Project2 {
       }
       String[] option = Arrays.copyOfRange(args, 0, options);
       String[] arguments = Arrays.copyOfRange(args, options, args.length);
-
-      System.out.println("options " + Arrays.toString(option));
-      System.out.println("Arguments " + Arrays.toString(arguments));
-
       if (args.length - options > 8) {
         System.err.println("The Number Of Arguments Has Exceeded The Limits");
         return;
       }
-
       if (arguments.length < 8) {
         System.err.println("Missing Command Line Argument");
         return;
@@ -279,13 +273,20 @@ public class Project2 {
         File airlineFile = new File(file);
 
         try {
+          airlineFile.createNewFile();
           FileReader readFromFile = new FileReader(file);
           TextParser parseIntoObject = new TextParser(readFromFile);
-          if(parseIntoObject.checkAirline(airline.getName()))
+          int value = parseIntoObject.checkAirline(airline.getName());
+          if(value == 1)
           {
             FileWriter fw = new FileWriter(airlineFile);
             TextDumper dumpIntoFile = new TextDumper(fw);
             dumpIntoFile.dump(airline);
+          }
+          else if(value == 2) { //The name matches so now i need to append the contents
+            FileWriter fw = new FileWriter(airlineFile,true);
+            TextDumper appendToFile = new TextDumper(fw);
+            appendToFile.appendFlightToFile(airline);
           }
           else {
             System.err.println("File Does not contain the airline " + airline.getName());

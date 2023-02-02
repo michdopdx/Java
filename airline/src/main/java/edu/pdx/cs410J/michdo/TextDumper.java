@@ -25,9 +25,33 @@ public class TextDumper implements AirlineDumper<Airline> {
   }
 
   /**
+   * This will append flight to a given file.
+   *
+   * @param airline  Airline object which we want to append to file containing same Airline
+   */
+  public void appendFlightToFile(Airline airline) {
+    Collection<Flight> listOfFlights = airline.getFlights();
+    try {
+      PrintWriter pw = new PrintWriter(this.writer);
+      for(Flight flight:listOfFlights) {
+        pw.println(flight.getNumber() + "|" +
+                  flight.getSource() + "|" +
+                  flight.getDepartureString() + "|" +
+                  flight.getDestination() + "|" +
+                  flight.getArrivalString());
+
+      }
+      this.writer.flush();
+
+    }catch (Exception e) {
+      System.err.println(e.getMessage());
+    }
+  }
+
+  /**
    * Writes contents from a given airline into a file
    *
-   * @param airline Airline object which will be stored into file
+   * @param airline Airline object which will be stored into file.
    */
   @Override
   public void dump(Airline airline) {

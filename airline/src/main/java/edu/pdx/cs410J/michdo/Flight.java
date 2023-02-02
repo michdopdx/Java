@@ -1,7 +1,6 @@
 package edu.pdx.cs410J.michdo;
 
 import edu.pdx.cs410J.AbstractFlight;
-
 import java.security.InvalidParameterException;
 import java.util.MissingFormatArgumentException;
 

@@ -25,6 +25,34 @@ class Project2IT extends InvokeMainTestCase {
 
 
   @Test
+  void filenameNoExtension ()
+  {
+      MainMethodResult result = invokeMain("-textFile", "Test" ,"-print","JetBlue","100","abc","9/16/2023","10:30","def","9/16/2023","12:00");
+      assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs abc at 9/16/2023 10:30 arrives def at 9/16/2023 12:00"));
+  }
+
+    @Test
+    void filenameWithExtension ()
+    {
+        MainMethodResult result = invokeMain("-textFile", "Test.txt" ,"-print","JetBlue","100","abc","9/16/2023","10:30","def","9/16/2023","12:00");
+        assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs abc at 9/16/2023 10:30 arrives def at 9/16/2023 12:00"));
+    }
+
+    @Test
+    void testWithAbsolutePathExtension ()
+    {
+        MainMethodResult result = invokeMain("-textFile", "../airline/Absol.txt" ,"-print","JetBlue","100","abc","9/16/2023","10:30","def","9/16/2023","12:00");
+        assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs abc at 9/16/2023 10:30 arrives def at 9/16/2023 12:00"));
+    }
+    @Test
+    void testWithAbsolutePathNoExtension ()
+    {
+        MainMethodResult result = invokeMain("-textFile", "../airline/Absol" ,"-print","JetBlue","100","abc","9/16/2023","10:30","def","9/16/2023","12:00");
+        assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs abc at 9/16/2023 10:30 arrives def at 9/16/2023 12:00"));
+    }
+
+
+  @Test
   @Disabled
   void testNoCommandLineArguments() {
     MainMethodResult result = invokeMain();

@@ -56,21 +56,21 @@ public class TextParserTest {
 
   @Test
   void CheckIfNoAirlineInFile () {
-    boolean check;
+    int check;
     InputStream resource = getClass().getResourceAsStream("empty-airline.txt");
     TextParser parser = new TextParser(new InputStreamReader(resource));
     check = parser.checkAirline("");
-    assert(check == true);
+    assert(check == 1);
   }
 
   @Test
   void CheckIfAirlineNameIsDifferent() {
-    boolean check;
+    int check;
     InputStream resource = getClass().getResourceAsStream("valid-airline.txt");
     TextParser parser = new TextParser(new InputStreamReader(resource));
     check = parser.checkAirline("JetBlue");
 
-    assert(check == false);
+    assert(check == 0);
 
   }
 

@@ -36,11 +36,57 @@ public class TextDumperTest {
     StringWriter sw = new StringWriter();
     TextDumper dumper = new TextDumper(sw);
     dumper.dump(airline);
+
+    String text = sw.toString();
+    assertThat(text, containsString("100|pfx|9/9/2009 1:00|pff|9/9/2009 2:00"));
+  }
+
+  @Test
+  void addMultiFlights() {
+    String airlineName = "Test Airline";
+    Airline airline = new Airline(airlineName);
+    Flight flight = new Flight(100,"pfx", "9/9/2009 1:00", "pff", "9/9/2009 2:00" );
+    airline.addFlight(flight);
+    Flight flight2 = new Flight(500,"pfx", "9/9/2009 1:00", "set", "9/9/2009 2:00" );
+    airline.addFlight(flight2);
+    StringWriter sw = new StringWriter();
+    TextDumper dumper = new TextDumper(sw);
+    dumper.dump(airline);
+    String text = sw.toString();
+    assertThat(text, containsString("100|pfx|9/9/2009 1:00|pff|9/9/2009 2:00"));
+    assertThat(text, containsString("500|pfx|9/9/2009 1:00|set|9/9/2009 2:00"));
+
+  }
+
+  @Test
+  void appendFlightToTextFile() {
+
+    String airlineName = "Test Airline";
+    Airline airline = new Airline(airlineName);
+
+    Flight flight = new Flight(100,"pdx", "9/9/2009 1:00", "ste", "9/9/2009 2:00" );
+    airline.addFlight(flight);
+    StringWriter sw = new StringWriter();
+    TextDumper dumper = new TextDumper(sw);
+    dumper.appendFlightToFile(airline);
   }
 
 
   @Test
   void canParseTextWrittenByTextDumper(@TempDir File tempDir) throws IOException, ParserException {
+    String airlineName = "Test Airline";
+    Airline airline = new Airline(airlineName);
+
+    File textFile = new File(tempDir, "airline.txt");
+    TextDumper dumper = new TextDumper(new FileWriter(textFile));
+    dumper.dump(airline);
+
+    TextParser parser = new TextParser(new FileReader(textFile));
+    Airline read = parser.parse();
+    assertThat(read.getName(), equalTo(airlineName));
+  }
+  @Test
+  void canReadFlightAndAirlineFromFile(@TempDir File tempDir) throws IOException, ParserException {
     String airlineName = "Test Airline";
     Airline airline = new Airline(airlineName);
 
