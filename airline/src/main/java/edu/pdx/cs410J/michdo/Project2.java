@@ -22,7 +22,7 @@ public class Project2 {
    * @throws InvalidParameterException If the numbers exceed expected values for each component.
    */
   static boolean isValidDateAndTime(String dateAndTime) {
-    if (dateAndTime.contains("/")) { //Checking for the date
+    if (dateAndTime.contains("/")) {
       int firstSlash = dateAndTime.indexOf("/");
       int secondSlash = dateAndTime.indexOf("/", firstSlash + 1);
 
@@ -48,7 +48,7 @@ public class Project2 {
         }
       }
     }
-    if (dateAndTime.contains(":")) {//Checking for time
+    if (dateAndTime.contains(":")) {
       int colonLocation = dateAndTime.indexOf(":");
       String hour = dateAndTime.substring(0, colonLocation);
       String min = dateAndTime.substring(colonLocation + 1, dateAndTime.length());

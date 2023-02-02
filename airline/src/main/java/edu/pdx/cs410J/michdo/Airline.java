@@ -13,9 +13,10 @@ import java.util.Collection;
  */
 public class Airline extends AbstractAirline<Flight> {
   private final String name;
+  /**
+   * The name of a Flight.
+   */
   Collection <Flight> listOfFlights = new ArrayList<Flight>();
-
-
   /**
    * Data representation of an Airline
    */

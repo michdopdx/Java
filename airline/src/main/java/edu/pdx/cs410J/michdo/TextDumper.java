@@ -69,7 +69,7 @@ public class TextDumper implements AirlineDumper<Airline> {
       }
       pw.flush();
     } catch (Exception e) {
-
+      System.err.println(e.getMessage());
     }
   }
 }

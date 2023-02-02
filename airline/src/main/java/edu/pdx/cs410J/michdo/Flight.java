@@ -10,12 +10,24 @@ import java.util.MissingFormatArgumentException;
 public class Flight extends AbstractFlight {
 
   private int flightNumber;
+  /**
+   * An integer that will denote the flight number.
+   */
   private String source;
+  /**
+   * A String that contains three-letter code of departure airport.
+   */
   private String departure;
+  /**
+   * A string that consist of date and time of departure.
+   */
   private String destination;
+  /**
+   * A String that contains three-letter code of arrival airport.
+   */
   private String arrival;
   /**
-   * Data needed to build a Flight.
+   * A string that consist of date and time of arrival
    */
 
   /**

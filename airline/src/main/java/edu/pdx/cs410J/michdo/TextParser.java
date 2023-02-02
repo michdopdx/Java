@@ -82,7 +82,7 @@ public class TextParser implements AirlineParser<Airline> {
             flight = new Flight(Integer.parseInt(flightNumber), flightSrc, flightDepart, flightDest, flightArrival);
             airline.addFlight(flight);
           } catch (Exception e) {
-
+            System.err.println(e.getMessage());
           }
         }
       }
