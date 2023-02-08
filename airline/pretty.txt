@@ -1,0 +1,6 @@
+Jet: Flight 100 One Way Trip from Allentown, PA To Portland, OR Flight Is Scheduled To Depart From Allentown, PA Airport 
+On Saturday, September 16, 2023, 8:00 PM, And Arriving At Portland, OR Airport at Sunday, September 17, 2023, 9:00 AM. The Duration Of The Flight is 780 Minutes 
+
+Jet: Flight 100 One Way Trip from Portland, OR To Portland, OR Flight Is Scheduled To Depart From Portland, OR Airport 
+On Saturday, September 16, 2023, 11:00 PM, And Arriving At Portland, OR Airport at Sunday, September 17, 2023, 9:00 AM. The Duration Of The Flight is 600 Minutes 
+

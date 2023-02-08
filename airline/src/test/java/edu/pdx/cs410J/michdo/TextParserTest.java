@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.security.InvalidParameterException;
 import java.util.Collection;
+import java.util.InvalidPropertiesFormatException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -47,11 +49,20 @@ public class TextParserTest {
     assertThat(airline.getName(), equalTo("Test Airline"));
     for(Flight flight :Flights) {
       assertThat(flight.getNumber(),equalTo(100));
-      assertThat(flight.getSource(),equalTo("abc"));
-      assertThat(flight.getDepartureString(),equalTo("9/16/2023 11:30"));
-      assertThat(flight.getDestination(),equalTo("def"));
-      assertThat(flight.getArrivalString(),equalTo("9/16/2023 12:30"));
+      assertThat(flight.getSource(),equalTo("PDX"));
+      assertThat(flight.getDepartureString(),equalTo("9/16/23, 11:30 AM"));
+      assertThat(flight.getDestination(),equalTo("PDX"));
+      assertThat(flight.getArrivalString(),equalTo("9/16/23, 12:30 PM"));
     }
+  }
+
+  @Test
+  void invalidDate() throws ParserException {
+    InputStream resource = getClass().getResourceAsStream("invalid-airline.txt");
+    assertThat(resource, notNullValue());
+    TextParser parser = new TextParser(new InputStreamReader(resource));
+    assertThrows(ParserException.class,parser::parse);
+
   }
 
   @Test

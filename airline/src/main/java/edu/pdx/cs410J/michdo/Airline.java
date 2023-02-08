@@ -6,6 +6,7 @@ import org.checkerframework.checker.units.qual.A;
 import javax.management.InstanceNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Class representation of an Airline.
@@ -61,5 +62,25 @@ public class Airline extends AbstractAirline<Flight> {
   @Override
   public Collection<Flight> getFlights() {
     return listOfFlights;
+  }
+
+  /**
+   * Sorts the collection of flights based on source code and departure time.
+   */
+  public void sortFlights() {
+    ArrayList<Flight> sortList = new ArrayList<>(this.listOfFlights);
+    try {
+      Collections.sort(sortList);
+      this.listOfFlights = new ArrayList<>();
+      for (Flight f : sortList) {
+        this.listOfFlights.add(f);
+      }
+    }catch (ClassCastException e)
+    {
+
+    }catch (UnsupportedOperationException e)
+    {
+
+    }
   }
 }

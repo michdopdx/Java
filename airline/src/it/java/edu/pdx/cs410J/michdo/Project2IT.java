@@ -1,22 +1,22 @@
 package edu.pdx.cs410J.michdo;
 
 import edu.pdx.cs410J.InvokeMainTestCase;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
- * An integration test for the {@link Project2} main class.
+ * An integration test for the {@link Project3} main class.
  */
 class Project2IT extends InvokeMainTestCase {
 
     /**
-     * Invokes the main method of {@link Project2} with the given arguments.
+     * Invokes the main method of {@link Project3} with the given arguments.
      */
     private MainMethodResult invokeMain(String... args) {
-        return invokeMain( Project2.class, args );
+        return invokeMain( Project3.class, args );
     }
 
   /**
@@ -27,66 +27,49 @@ class Project2IT extends InvokeMainTestCase {
   @Test
   void filenameNoExtension ()
   {
-      MainMethodResult result = invokeMain("-textFile", "Test" ,"-print","JetBlue","100","abc","9/16/2023","10:30","def","9/16/2023","12:00");
-      assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs abc at 9/16/2023 10:30 arrives def at 9/16/2023 12:00"));
+      MainMethodResult result = invokeMain("-textFile", "Test" ,"-print","JetBlue","100","PDX","9/16/2023","10:30","am","PDX","9/16/2023","12:00","am");
+      assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs PDX at 9/16/23, 10:30 AM arrives PDX at 9/16/23, 12:00 AM"));
   }
 
     @Test
     void filenameWithExtension ()
     {
-        MainMethodResult result = invokeMain("-textFile", "Test.txt" ,"-print","JetBlue","100","abc","9/16/2023","10:30","def","9/16/2023","12:00");
-        assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs abc at 9/16/2023 10:30 arrives def at 9/16/2023 12:00"));
+        MainMethodResult result = invokeMain("-textFile", "Test.txt" ,"-print","JetBlue","100","PDX","9/16/2023","10:30","am","PDX","9/16/2023","12:00","am");
+        assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs PDX at 9/16/23, 10:30 AM arrives PDX at 9/16/23, 12:00 AM"));
     }
-
     @Test
     void testWithAbsolutePathExtension ()
     {
-        MainMethodResult result = invokeMain("-textFile", "../airline/Absol.txt" ,"-print","JetBlue","100","abc","9/16/2023","10:30","def","9/16/2023","12:00");
-        assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs abc at 9/16/2023 10:30 arrives def at 9/16/2023 12:00"));
+        MainMethodResult result = invokeMain("-textFile", "../airline/Absol.txt" ,"-print","JetBlue","100","PDX","9/16/2023","10:30","am","PDX","9/16/2023","12:00","am");
+        assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs PDX at 9/16/23, 10:30 AM arrives PDX at 9/16/23, 12:00 AM"));
     }
     @Test
     void testWithAbsolutePathNoExtension ()
     {
-        MainMethodResult result = invokeMain("-textFile", "../airline/Absol" ,"-print","JetBlue","100","abc","9/16/2023","10:30","def","9/16/2023","12:00");
-        assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs abc at 9/16/2023 10:30 arrives def at 9/16/2023 12:00"));
+        MainMethodResult result = invokeMain("-textFile", "../airline/Absol" ,"-print","JetBlue","100","PDX","9/16/2023","10:30","am","PDX","9/16/2023","12:00","am");
+        assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs PDX at 9/16/23, 10:30 AM arrives PDX at 9/16/23, 12:00 AM"));
     }
 
-
   @Test
-  @Disabled
   void testNoCommandLineArguments() {
     MainMethodResult result = invokeMain();
-    assertThat(result.getTextWrittenToStandardError(), containsString("It seems that you have not entered any information about the Airline or Flight Please retry again.\n" +
-            "Format: java -jar target/airline-2023.0.0.jar [options] <args> \n " +
-            "Options(Are optional)\n " +
-            "*: -README -> Prints out the README \n " +
-            "*: -print  -> Prints the description of the flight \n" +
-            "Args: (IN THIS ORDER) \n" +
-            "*: Airline Name -> Name of the airline being added \n" +
-            "*: Flight Number-> The number of the Flight being added \n" +
-            "*: Source       -> 3-letter code of departure airport \n" +
-            "*: Departure data -> The date of departure(Formatted as mm/dd/yyyy)\n" +
-            "*: Departure time -> The time of departure(Formatted as hh:mm \n" +
-            "*: Destination ->  3-letter code of destination airport \n" +
-            "*: Arrival data -> The date of arrival(Formatted as mm/dd/yyyy) \n" +
-            "*: Departure time -> The time of departure(Formatted as hh:mm \n " +
-            "An example: java -jar target/airline-2023.0.0.jar -print JetBlue 100 abc 9/16/2023 10:30 def 9/16/2023 12:30\n"));
+    assertThat(result.getTextWrittenToStandardError(), containsString("It seems that you have not entered any information"));
   }
 
   @Test
-    void testIncorrectOptionForREADMEAndPrint(){
-      MainMethodResult result = invokeMain("-readme","JetBlue","100","abc","9/16/2023","10:30","def","9/16/2023","12:00");
+  void testIncorrectOptionForREADMEAndPrint(){
+      MainMethodResult result = invokeMain("-readme","JetBlue","100","abc","9/16/2023","10:30","am","def","9/16/2023","12:00","am");
       assertThat(result.getTextWrittenToStandardError(), containsString("-readme option does not exist"));
   }
 
     @Test
     void testWithPrefectCommandLine(){
-        MainMethodResult result = invokeMain("-print","JetBlue","100","abc","9/16/2023","10:30","def","9/16/2023","12:00");
-        assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs abc at 9/16/2023 10:30 arrives def at 9/16/2023 12:00"));
+        MainMethodResult result = invokeMain("-print","JetBlue","100","PDX","9/16/2023","10:30","am","PDX","9/16/2023","12:00","am");
+        assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs PDX at 9/16/23, 10:30 AM arrives PDX at 9/16/23, 12:00 AM"));
     }
     @Test
     void testExceedingArguments(){
-        MainMethodResult result = invokeMain("-print","JetBlue","100","abc","9/16/2023","10:30","def","9/16/2023","12:00","xyz","300");
+        MainMethodResult result = invokeMain("-print","JetBlue","100","abc","9/16/2023","10:30","am","def","9/16/2023","12:00","am", "200","100");
         assertThat(result.getTextWrittenToStandardError(),containsString("The Number Of Arguments Has Exceeded The Limits"));
     }
     @Test
@@ -101,16 +84,9 @@ class Project2IT extends InvokeMainTestCase {
     }
     @Test
     void testCommandLineWithInvalidNumber(){
-        MainMethodResult result = invokeMain("-print","JetBlue","100a","abc","9/16/2023","10:30","def","9/16/2023","12:00");
+        MainMethodResult result = invokeMain("-print","JetBlue","100a","abc","9/16/2023","10:30","am","def","9/16/2023","12:00","am");
         assertThat(result.getTextWrittenToStandardError(),containsString("Flight Number Entered Is Not A Number"));
     }
-
-    @Test
-    void testCommandLineNoFlightNumber(){
-        MainMethodResult result = invokeMain("-print","JetBlue","100a","abc","9/16/2023","10:30","def","9/16/2023","12:00");
-        assertThat(result.getTextWrittenToStandardError(),containsString("Flight Number Entered Is Not A Number"));
-    }
-
     @Test
     void testCommandLineWithoutSrc(){
         MainMethodResult result = invokeMain("-print","JetBlue","100","9/16/2023","10:30","def","9/16/2023","12:00");
@@ -118,7 +94,7 @@ class Project2IT extends InvokeMainTestCase {
     }
     @Test
     void testCommandLineWithInvalidSrc(){
-        MainMethodResult result = invokeMain("-print","JetBlue","100","abff","9/16/2023","10:30","def","9/16/2023","12:30");
+        MainMethodResult result = invokeMain("-print","JetBlue","100","abff","9/16/2023","10:30", "am","def","9/16/2023","12:30","am");
         assertThat(result.getTextWrittenToStandardError(),containsString("The Source Code You Have Entered is 4 Letters Long, Must Be Three"));
     }
     @Test
@@ -152,11 +128,30 @@ class Project2IT extends InvokeMainTestCase {
 
     @Test
     void testCommandLineWithoutArrivalTime(){
-        MainMethodResult result = invokeMain("-print","JetBlue","100","abc","9/16/2023","10:30","def","9/16/2023");
+        MainMethodResult result = invokeMain("-print","JetBlue","100","abc","9/16/2023","10:30","am","def","9/16/2023","pm");
         assertThat(result.getTextWrittenToStandardError(),containsString("Missing Command Line Argument"));
     }
 
+    @Test
+    void testNullAirlineName (){
+        assertThrows(NullPointerException.class, ()-> invokeMain(Project3.class,"-print",null,"100","abc","9/16/2023","10:30","def","9/16/2023"));
+    }
 
+    @Test
+    void testTextfileNo() {
+        MainMethodResult result = invokeMain("-textFile","-print","JetBlue","100","abc","9/16/2023","10:30","am","def","9/16/2023","pm");
+        assertThat(result.getTextWrittenToStandardError(),containsString("Missing TextFile for -textFile"));
+    }
 
+    @Test
+    void InvalidDeparture() {
+        MainMethodResult result = invokeMain("-print","JetBlue","100","abc","9/16/2023/1","10:30","am","def","9/16/2023","12:00","am");
+        assertThat(result.getTextWrittenToStandardError(),containsString("Invalid Departure"));
+    }
 
+    @Test
+    void InvalidArrival() {
+        MainMethodResult result = invokeMain("-print","JetBlue","100","abc","9/16/2023","10:30","am","def","9/16/2023/1","12:00","am");
+        assertThat(result.getTextWrittenToStandardError(),containsString("Invalid Arrival"));
+    }
 }

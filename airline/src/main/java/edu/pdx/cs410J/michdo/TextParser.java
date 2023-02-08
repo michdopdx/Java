@@ -4,6 +4,7 @@ import edu.pdx.cs410J.AirlineParser;
 import edu.pdx.cs410J.ParserException;
 
 import java.io.*;
+import java.security.InvalidParameterException;
 
 /**
  * Class <code>TextParser</code> used to read Airline and its Flights from a file.
@@ -51,7 +52,7 @@ public class TextParser implements AirlineParser<Airline> {
    * @throws ParserException Will be thrown if NO Airline was found.
    */
   @Override
-  public Airline parse() throws ParserException {
+  public Airline parse() throws ParserException,InvalidParameterException {
     String line;
     String airlineName = null;
     String flightNumber = null;
@@ -69,30 +70,33 @@ public class TextParser implements AirlineParser<Airline> {
           airlineName = line;
           airline = new Airline(airlineName);
         }
-        if (line.contains("|")) {
+        else if (line.contains("|")) {
           String[] flightData = line.split("\\|");
           flightNumber = flightData[0];
           flightSrc = flightData[1];
           flightDepart = flightData[2];
           flightDest = flightData[3];
           flightArrival = flightData[4];
-        }
-        if (airlineName != null) {
+
           try {
-            flight = new Flight(Integer.parseInt(flightNumber), flightSrc, flightDepart, flightDest, flightArrival);
+            flight = new Flight(flightNumber, flightSrc, flightDepart, flightDest, flightArrival);
             airline.addFlight(flight);
-          } catch (Exception e) {
+          } catch (NullPointerException e) {
             System.err.println(e.getMessage());
+          }
+          catch (InvalidParameterException e) {
+            throw new InvalidParameterException(e.getMessage());
           }
         }
       }
       if(airlineName == null)
       {
-        throw new ParserException("");
+        throw new ParserException("No AirLine was found");
       }
-      return airline;
+    } catch (InvalidParameterException e) {
+      throw new ParserException("While parsing airline text" + e.getMessage());
     } catch (IOException e) {
-      throw new ParserException("While parsing airline text", e);
     }
+    return airline;
   }
 }

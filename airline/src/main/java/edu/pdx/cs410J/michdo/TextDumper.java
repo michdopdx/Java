@@ -3,7 +3,10 @@ package edu.pdx.cs410J.michdo;
 import edu.pdx.cs410J.AirlineDumper;
 
 import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 
 /**
  * Class <code>TextDumper</code> used to write Airline and its Flights into file
@@ -24,28 +27,37 @@ public class TextDumper implements AirlineDumper<Airline> {
     this.writer = writer;
   }
 
+
+  /**
+   * Changes variable of type Data to type String
+   * @param date A date for type Date
+   * @return A string date format as MM/dd/yyyy hh:mm a
+   */
+  public String dateToString(Date date)
+  {
+    String stringDate;
+    DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+    stringDate = format.format(date);
+    return stringDate;
+  }
+
   /**
    * This will append flight to a given file.
    *
    * @param airline  Airline object which we want to append to file containing same Airline
    */
-  public void appendFlightToFile(Airline airline) {
+  public void appendFlightToFile(Airline airline) throws IOException{
     Collection<Flight> listOfFlights = airline.getFlights();
-    try {
+
       PrintWriter pw = new PrintWriter(this.writer);
       for(Flight flight:listOfFlights) {
         pw.println(flight.getNumber() + "|" +
-                  flight.getSource() + "|" +
-                  flight.getDepartureString() + "|" +
-                  flight.getDestination() + "|" +
-                  flight.getArrivalString());
-
-      }
+                flight.getSource() + "|" +
+                dateToString(flight.getDeparture()) + "|" +
+                flight.getDestination() + "|" +
+                dateToString(flight.getArrival()));
       this.writer.flush();
-
-    }catch (Exception e) {
-      System.err.println(e.getMessage());
-    }
+      }
   }
 
   /**
@@ -54,22 +66,18 @@ public class TextDumper implements AirlineDumper<Airline> {
    * @param airline Airline object which will be stored into file.
    */
   @Override
-  public void dump(Airline airline) {
+  public void dump(Airline airline) throws IOException {
     Collection<Flight> listOfFlights = airline.getFlights();
     PrintWriter pw = new PrintWriter(this.writer);
 
-    try {
       pw.println(airline.getName());
       for(Flight flight:listOfFlights) {
         pw.println(flight.getNumber() + "|" +
                 flight.getSource() + "|" +
-                flight.getDepartureString() + "|" +
+                dateToString(flight.getDeparture()) + "|" +
                 flight.getDestination() + "|" +
-                flight.getArrivalString());
+                dateToString(flight.getArrival()));
       }
       pw.flush();
-    } catch (Exception e) {
-      System.err.println(e.getMessage());
-    }
   }
 }

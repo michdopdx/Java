@@ -1,13 +1,25 @@
 package edu.pdx.cs410J.michdo;
 
 import edu.pdx.cs410J.AbstractFlight;
+import edu.pdx.cs410J.AirportNames;
+import edu.pdx.cs410J.ParserException;
+
 import java.security.InvalidParameterException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.lang.Comparable;
+
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Date;
+import java.util.Locale;
 import java.util.MissingFormatArgumentException;
 
 /** Class representation of a flight.
  * @author Michael Do
  */
-public class Flight extends AbstractFlight {
+public class Flight extends AbstractFlight implements Comparable<Flight>{
 
   private int flightNumber;
   /**
@@ -17,7 +29,7 @@ public class Flight extends AbstractFlight {
   /**
    * A String that contains three-letter code of departure airport.
    */
-  private String departure;
+  private Date departure;
   /**
    * A string that consist of date and time of departure.
    */
@@ -25,14 +37,14 @@ public class Flight extends AbstractFlight {
   /**
    * A String that contains three-letter code of arrival airport.
    */
-  private String arrival;
+  private Date arrival;
   /**
    * A string that consist of date and time of arrival
    */
 
   /**
    * Flight constructor that creates a flight object from given arguments.
-   * <p>
+   *
    * @param flight An integer that will denote the flight number.
    * @param src A String that contains three-letter code of departure airport.
    * @param depart A string that consist of date and time of departure.
@@ -41,31 +53,69 @@ public class Flight extends AbstractFlight {
    * @throws NullPointerException Is thrown if any argument is null.
    * @throws InvalidParameterException Is thrown if the flight of the number is less than 0.
    */
-  public Flight(int flight, String src, String depart, String dest, String ar)
-  {
-    if(flight == -1)
-    {
-      throw new NullPointerException("No Flight Number Was entered");
+  public Flight(String flight, String src, String depart, String dest, String ar) throws InvalidParameterException,NullPointerException {
+
+   checkNullValue(flight,"Flight Number");
+    if (checkForFlightInt(flight)) {
+      this.flightNumber = Integer.parseInt(flight);
+    } else {
+      throw new InvalidParameterException("Flight Number Entered Is Not A Number");
     }
-    else if(flight < 0)
-    {
-      throw new InvalidParameterException("Flight Number Entered Is NOT Valid");
+
+    checkNullValue(src,"Source");
+    if (src.length() == 3) {
+      if (checkValidCode(src)) {
+        this.source = src.toUpperCase();
+      } else {
+        throw new InvalidParameterException("The Source Code You Entered " + src + " Does not exist");
+      }
+    } else {
+      throw new InvalidParameterException("The Source Code You Have Entered is " + src.length() + " Letters Long, Must Be Three");
     }
-    this.flightNumber = flight;
+    if(depart != null)
+    {
+      if(checkFormatDateAndTime(depart)) {
+        this.departure = formatDateAndTime(depart);
+      }
+      else
+        throw new InvalidParameterException(" Departure Entered Was, " + depart + " Expected, (dd/mm/yyyy hh:mm am/pm)");
+    }
+    else{
+      throw new NullPointerException("Missing Departure");
+    }
 
-    checkNullValue(src);
-    this.source = src;
+    checkNullValue(dest,"Destination");
+    if (dest.length() == 3) {
+      if (checkValidCode(dest)) {
+        this.destination = dest.toUpperCase();
+      } else {
+        throw new InvalidParameterException("The Destination Code You Entered " + dest + " Does not exist");
+      }
+    } else {
+      throw new InvalidParameterException("The Destination Code You Have Entered is " + dest.length() + " Letters Long, Must Be Three");
+    }
 
-    checkNullValue(depart);
-    checkFormatForDateAndTime(depart);
-    this.departure = depart;
+    if(ar != null)
+    {
+      if(checkFormatDateAndTime(ar)) {
+        this.arrival = formatDateAndTime(ar);
+      }
+      else
+        throw new InvalidParameterException(" Arrival Entered Was, " + ar + " Expected, (dd/mm/yyyy hh:mm)");
+    }
+    else{
+      throw new NullPointerException("Missing Arrival");
+    }
+  }
 
-    checkNullValue(dest);
-    this.destination = dest;
-
-    checkNullValue(ar);
-    checkFormatForDateAndTime(ar);
-    this.arrival = ar;
+  public Date formatDateAndTime(String s) {
+    DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+    try{
+      Date temp = format.parse(s);
+      return temp;
+    }catch (ParseException e) {
+    }
+    return null;
   }
 
   /**
@@ -73,23 +123,57 @@ public class Flight extends AbstractFlight {
    * <p>
    * @param obj Object that needs to be checked.
    * @throws NullPointerException If the object is null.
-   *
    */
-  private static void checkNullValue(Object obj) {
+  public static void checkNullValue(Object obj,String type) {
     if(obj == null) {
-      throw new NullPointerException("Missing Required Argument");
+      throw new NullPointerException("Missing " + type);
     }
   }
 
   /**
-   * Verifies if the date and time string has both a slash and colon.
-   * <p>
-   * @param dateTime A string that contains the date and the time
-   * @throws MissingFormatArgumentException If the argument string does not contain slash or a colon.
+   * Checks if a string can be turned into a valid flight number.
+   * @param check String input being checked if it is a valid number.
+   * @return True if check is a valid number else false.
    */
-  private static void checkFormatForDateAndTime(String dateTime) {
-    if(!dateTime.contains("/") || !dateTime.contains(":")) {
-      throw new MissingFormatArgumentException("Missing Date or Time from departure or arrival");
+  public static boolean checkForFlightInt (String check) {
+    try {
+      Integer.parseInt(check);
+      return true;
+    } catch (NumberFormatException e) {
+      return false;
+    }
+  }
+  /**
+   * Checks if a given string contains a number. If a number is present return false, else true.
+   *
+   * @param code Will search this string for numbers.
+   * @return True if no number is fond in string else false.
+   */
+  public static boolean checkValidCode (String code)
+  {
+    String check = AirportNames.getName(code);
+    if(check != null) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  /**
+   * Used to check if the format of date is in pattern MM/dd/yyyy hh:mm a.
+   * @param dateTime The date of type string.
+   * @return True if the argument follows the format, else false.
+   */
+  public static boolean checkFormatDateAndTime(String dateTime)
+  {
+    DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+    format.setLenient(false);
+    try{
+      format.parse(dateTime);
+      return true;
+    }catch (ParseException e) {
+      return false;
     }
   }
 
@@ -111,13 +195,22 @@ public class Flight extends AbstractFlight {
     return this.source;
   }
 
+  public Date  getDeparture()
+  {
+   return this.departure;
+  }
+  public Date getArrival()
+  {
+    return this.arrival;
+  }
   /**
    * Getter which gets the date and time of departure for a flight.
    * @return Date and time of departure.
    */
   @Override
   public String getDepartureString() {
-    return this.departure;
+    DateFormat format = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT , Locale.US);
+    return format.format(this.departure);
   }
 
   /**
@@ -135,7 +228,39 @@ public class Flight extends AbstractFlight {
    */
   @Override
   public String getArrivalString() {
-    return this.arrival;
+    DateFormat format = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT, Locale.US);
+    return format.format(this.arrival);  }
+
+  /**
+   * Gets the duration of the flights in minutes.
+   * @return Duration in minutes as a string.
+   */
+  public String getFlightDuration()
+  {
+    long duration = this.arrival.getTime() -  this.departure.getTime();
+    long second = duration / 1000;
+    long min = second/60;
+
+    return Long.toString(min);
   }
 
+  /**
+   * Used to compare two Flights.
+   * @param o the object to be compared.
+   * @return -1 if current flight is larger alphabetically, 1 if o is greater alphabetically, and 0 if the flights are equal
+   */
+  @Override
+  public int compareTo(Flight o) {
+    int result = (this.source.compareTo(o.getSource()));
+    if(result < 0){
+      return -1;
+    }
+    if(result > 0) {
+      return 1;
+    }
+    if(result == 0) {
+      return this.departure.compareTo(o.departure);
+    }
+    return result;
+  }
 }

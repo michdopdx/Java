@@ -1,6 +1,7 @@
 package edu.pdx.cs410J.michdo;
 
 import edu.pdx.cs410J.ParserException;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -19,7 +20,11 @@ public class TextDumperTest {
 
     StringWriter sw = new StringWriter();
     TextDumper dumper = new TextDumper(sw);
-    dumper.dump(airline);
+    try {
+      dumper.dump(airline);
+    }catch (IOException e) {
+
+    }
 
     String text = sw.toString();
     assertThat(text, containsString(airlineName));
@@ -27,34 +32,41 @@ public class TextDumperTest {
 
   @Test
   void addFlightToTextFile() {
-
     String airlineName = "Test Airline";
     Airline airline = new Airline(airlineName);
-
-    Flight flight = new Flight(100,"pfx", "9/9/2009 1:00", "pff", "9/9/2009 2:00" );
+    Flight flight = new Flight("100","PDX", "9/9/2009 1:00 pm", "PDX", "9/9/2009 2:00 am" );
     airline.addFlight(flight);
     StringWriter sw = new StringWriter();
     TextDumper dumper = new TextDumper(sw);
-    dumper.dump(airline);
+    try {
+      dumper.dump(airline);
+    }catch (IOException e) {
 
+    }
     String text = sw.toString();
-    assertThat(text, containsString("100|pfx|9/9/2009 1:00|pff|9/9/2009 2:00"));
+    assertThat(text, containsString("Test Airline\n" +
+            "100|PDX|09/09/2009 01:00 PM|PDX|09/09/2009 02:00 AM"));
   }
 
   @Test
   void addMultiFlights() {
     String airlineName = "Test Airline";
     Airline airline = new Airline(airlineName);
-    Flight flight = new Flight(100,"pfx", "9/9/2009 1:00", "pff", "9/9/2009 2:00" );
+    Flight flight = new Flight("100","PDX", "9/9/2009 1:00 am", "PDX", "9/9/2009 2:00 pm" );
     airline.addFlight(flight);
-    Flight flight2 = new Flight(500,"pfx", "9/9/2009 1:00", "set", "9/9/2009 2:00" );
+    Flight flight2 = new Flight("500","PDX", "9/9/2009 1:00 am", "PDX", "9/9/2009 2:00 pm" );
     airline.addFlight(flight2);
     StringWriter sw = new StringWriter();
     TextDumper dumper = new TextDumper(sw);
-    dumper.dump(airline);
+    try {
+      dumper.dump(airline);
+    }catch (IOException e) {
+
+    }
     String text = sw.toString();
-    assertThat(text, containsString("100|pfx|9/9/2009 1:00|pff|9/9/2009 2:00"));
-    assertThat(text, containsString("500|pfx|9/9/2009 1:00|set|9/9/2009 2:00"));
+    assertThat(text, containsString("Test Airline\n" +
+            "100|PDX|09/09/2009 01:00 AM|PDX|09/09/2009 02:00 PM\n" +
+            "500|PDX|09/09/2009 01:00 AM|PDX|09/09/2009 02:00 PM\n"));
 
   }
 
@@ -64,11 +76,15 @@ public class TextDumperTest {
     String airlineName = "Test Airline";
     Airline airline = new Airline(airlineName);
 
-    Flight flight = new Flight(100,"pdx", "9/9/2009 1:00", "ste", "9/9/2009 2:00" );
+    Flight flight = new Flight("100","PDX", "9/9/2009 1:00 am", "PDX", "9/9/2009 2:00 pm" );
     airline.addFlight(flight);
     StringWriter sw = new StringWriter();
     TextDumper dumper = new TextDumper(sw);
-    dumper.appendFlightToFile(airline);
+    try {
+      dumper.appendFlightToFile(airline);
+    }catch (IOException e) {
+
+    }
   }
 
 
