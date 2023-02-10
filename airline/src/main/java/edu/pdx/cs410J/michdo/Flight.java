@@ -106,12 +106,36 @@ public class Flight extends AbstractFlight implements Comparable<Flight>{
     else{
       throw new NullPointerException("Missing Arrival");
     }
+
+    if(timeDifference(this.departure,this.arrival))
+    {
+      throw new InvalidParameterException("Arrival time Comes before Departure. Departure time MUST come before Arrival");
+    }
   }
 
-  public Date formatDateAndTime(String s) {
+  /**
+   * Use to check whether Departure date comes before Arrival date.
+   * @param departure The date which the flight leaves.
+   * @param arrival The date which the flight lands
+   * @return True if the Departure time is less than Arrival time, else false.
+   */
+  public boolean timeDifference (Date departure, Date arrival) {
+    if(departure.getTime() > arrival.getTime())
+    {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Format date string with MM/dd/yyyy hh:mm a
+   * @param date Given date in string form.
+   * @return returns formatted string with MM/dd/yyyy hh:mm a.
+   */
+  public Date formatDateAndTime(String date) {
     DateFormat format = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
     try{
-      Date temp = format.parse(s);
+      Date temp = format.parse(date);
       return temp;
     }catch (ParseException e) {
     }
@@ -195,10 +219,19 @@ public class Flight extends AbstractFlight implements Comparable<Flight>{
     return this.source;
   }
 
+  /**
+   *  Gets the departure date/time for flight
+   * @return The Departure date/time of a given flight
+   */
   public Date  getDeparture()
   {
    return this.departure;
   }
+
+  /**
+   * Gets the arrival date/time for flight
+   * @return The Arrival date/time for a given flight
+   */
   public Date getArrival()
   {
     return this.arrival;

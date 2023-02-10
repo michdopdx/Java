@@ -34,7 +34,7 @@ public class PrettyPrinterTest {
 		@Test
 		void testpretty () {
 				Airline airline = new Airline("Jet");
-				Flight flight = new Flight("100","PDX","09/16/2000 10:30 am","PDX","9/16/2000 12:00 am");
+				Flight flight = new Flight("100","PDX","09/16/2000 10:30 am","PDX","9/16/2000 12:00 pm");
 				airline.addFlight(flight);
 				String f = "prettyprint.txt";
 				String line = null;
@@ -52,11 +52,12 @@ public class PrettyPrinterTest {
 				assertThat(line,equalTo("Jet: Flight 100 One Way Trip from Portland, OR To Portland, OR Flight Is Scheduled To Depart From Portland, OR Airport "));
 		}
 
+
 		@Test
 		void notSrcAirportName()
 		{
 				Airline airline = new Airline("Jet");
-				Flight flight = new Flight("100","PDX","09/16/2000 10:30 am","PDX","9/16/2000 12:00 am");
+				Flight flight = new Flight("100","PDX","09/16/2000 10:30 am","PDX","9/16/2000 12:00 pm");
 				airline.addFlight(flight);
 				String f = "prettyprint.txt";
 				String line = null;
@@ -78,7 +79,7 @@ public class PrettyPrinterTest {
 		void notDestCodeAirportName()
 		{
 				Airline airline = new Airline("Jet");
-				Flight flight = new Flight("100","PDX","09/16/2000 10:30 am","PDX","9/16/2000 12:00 am");
+				Flight flight = new Flight("100","PDX","09/16/2000 10:30 am","PDX","9/16/2000 12:00 pm");
 				airline.addFlight(flight);
 				String f = "prettyprint.txt";
 				String line = null;

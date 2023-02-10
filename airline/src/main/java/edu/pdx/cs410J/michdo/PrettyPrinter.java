@@ -34,6 +34,11 @@ public class PrettyPrinter implements AirlineDumper<Airline> {
 		}
 
 
+		/**
+		 * Takes in a date and uses DateFormat to then change the formatting of given date.
+		 * @param date The date.
+		 * @return A formatted string using DateFormat along with full date and short time.
+		 */
 		public String prettyFormat (Date date) {
 				DateFormat format = DateFormat.getDateTimeInstance(DateFormat.FULL,DateFormat.SHORT, Locale.US);
 				return format.format(date);

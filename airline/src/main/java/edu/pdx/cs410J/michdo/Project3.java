@@ -65,6 +65,7 @@ public class Project3 {
     boolean hasPrintPretty = false;
     Airline airlineFromFile = null;
 
+
     if (args.length == 0) {
       System.err.println("It seems that you have not entered any information about the Airline or Flight Please retry again.\n" +
               "Format: java -jar target/airline-2023.0.0.jar [options] <args> \n " +
@@ -84,62 +85,71 @@ public class Project3 {
               "*: Arrival date -> The date of arrival(Formatted as mm/dd/yyyy) \n" +
               "*: Arrival time -> The time of departure(Formatted as hh:mm \n " +
               "*: Arrival AM/PM -> The time of Arrival(am / pm \n" +
-              "An example: java -jar target/airline-2023.0.0.jar -print JetBlue 100 abc 9/16/2023 10:30 am def 9/16/2023 12:30 pm\n");
+              "An example: java -jar target/airline-2023.0.0.jar -print JetBlue 100 PDX 9/16/2023 10:30 am PDX 9/16/2023 12:30 pm\n");
       return;
     }
 
       for (int i = 0; i < args.length; i++) {
-        if (args[i].contains("-")) {
-          if(args[i].contains("-README")) {
-            try {
-              InputStream readme = Project3.class.getResourceAsStream("README.txt");
-              BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
-              String line;
-              while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+        if (args[i].contains("-") || args[i].contains(".txt")) {
+          if(args[i].contains("-README") || args[i].contains("-print") || args[i].contains("-textFile") || (args[i].contains("-pretty")) || args[i].contains(".txt"))
+          {
+            if (args[i].contains("-README")) {
+              try {
+                InputStream readme = Project3.class.getResourceAsStream("README.txt");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                  System.out.println(line);
+                }
+                return;
+              } catch (IOException e) {
+                System.err.println("README Not Found");
+                return;
               }
-              return;
-            } catch (IOException e) {
-              System.err.println("README Not Found");
-              return;
+            }
+
+            if (args[i].contains("-print")) {
+              options++;
+            }
+
+            if (args[i].contains("-textFile")) {
+              if (!args[i + 1].contains(".txt") && !args[i + 1].contains("-")) {
+                file = args[i + 1] + ".txt";
+                args[i + 1] = file;
+              } else if (args[i + 1].contains("-")) {
+                System.err.println("Missing TextFile for -textFile");
+                return;
+              } else {
+                file = args[i + 1];
+              }
+              options++;
+            }
+
+            if (args[i].contains("-pretty")) {
+              if (!args[i + 1].contains(".txt") && !args[i + 1].equals("-")) {
+                prettyFile = args[i + 1] + ".txt";
+                args[i + 1] = prettyFile;
+              } else if (args[i + 1].equals("-")) {
+              } else {
+                prettyFile = args[i + 1];
+              }
+              options++;
+            }
+
+            if (args[i].contains(".txt")) {
+              options++;
             }
           }
-          if (args[i].contains("-textFile")) {
-            if(!args[i +1].contains(".txt") && !args[i +1].contains("-")) {
-              file = args[i +1] + ".txt";
-              args[i +1] = file;
-            }
-            else if(args[i+1].contains("-")) {
-              System.err.println("Missing TextFile for -textFile");
-              return;
-            }
-            else {
-              file = args[i +1];
-            }
-            options++;
-          }
-          if (args[i].contains("-pretty")) {
-            if(!args[i +1].contains(".txt") && !args[i +1].equals("-")) {
-              prettyFile = args[i +1] + ".txt";
-              args[i +1] = prettyFile;
-            }
-            else if(args[i+1].contains("-")) {
-              System.err.println("Missing TextFile for -pretty");
-              return;
-            }
-            else{
-              prettyFile = args[i +1];
-            }
-            options++;
-          }
-          options++;
+          else
+            options ++;
         }
       }
 
       String[] option = Arrays.copyOfRange(args, 0, options);
+      //System.out.println(Arrays.toString(option));
       String[] arguments = Arrays.copyOfRange(args, options, args.length);
 
-      if (args.length - options > 10) {
+    if (args.length - options > 10) {
         System.err.println("The Number Of Arguments Has Exceeded The Limits");
         return;
       }
@@ -149,7 +159,7 @@ public class Project3 {
       }
 
       for (String op : option) {
-        if (op.equals("-print") || op.equals("-README") || op.equals("-textFile")  || op.equals("-pretty")|| op.contains(".txt") || op.equals("-")) {
+        if (op.equals("-print") || op.equals("-README") || op.equals("-textFile")  || op.equals("-pretty")|| op.contains(".txt") || op.equals("-") ||op.equals(prettyFile)) {
           if (op.equals("-print")) {
             hasPrint = true;
           }
@@ -253,14 +263,27 @@ public class Project3 {
         return;
       }
     }
-    if(hasPretty){
-      Airline prettyChoice;
-      if(hasFile) {
-        prettyChoice = airlineFromFile;
+
+    if(hasPretty) {
+      if(hasPrintPretty) {
+        PrintWriter writer = new PrintWriter(System.out);
+        PrettyPrinter pretty = new PrettyPrinter(writer);
+        if(hasFile) {
+          pretty.dump(airlineFromFile);
+        }
+        else {
+          pretty.dump(airline);
+        }
       }
-      else {
-        prettyChoice = airline;
-      }
+
+      else if(prettyFile != null) {
+        Airline prettyChoice;
+        if(hasFile) {
+          prettyChoice = airlineFromFile;
+        }
+        else
+          prettyChoice = airline;
+
         try {
           File pretty = new File(prettyFile);
           FileWriter fw = new FileWriter(pretty);
@@ -268,21 +291,6 @@ public class Project3 {
           printPretty.dump(prettyChoice);
         } catch (IOException e) {
           System.err.println("No able to write to " + prettyFile);
-          return;
-        }
-      if(hasPrintPretty) {
-        String line;
-        try{
-          FileReader readPrettyFile = new FileReader(prettyFile);
-          BufferedReader br = new BufferedReader(readPrettyFile);
-          while ((line = br.readLine()) != null) {
-            System.out.println(line);
-          }
-        }catch (FileNotFoundException e) {
-          System.err.println(prettyFile + " Can Not Be Found");
-          return;
-        }catch (IOException e) {
-          System.err.println("Not able to read " + prettyFile);
           return;
         }
       }

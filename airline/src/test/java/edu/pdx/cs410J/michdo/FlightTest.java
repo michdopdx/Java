@@ -26,9 +26,9 @@ public class FlightTest {
 
   @Test
     void makeACorrectFlight() {
-      Flight flight = new Flight("100","PDX","09/16/2000 10:30 am","PDX","9/16/2000 12:00 am");
+      Flight flight = new Flight("100","PDX","09/16/2000 10:30 am","PDX","9/16/2000 12:00 pm");
       String flightString = flight.toString();
-      assertThat(flightString,equalTo("Flight 100 departs PDX at 9/16/00, 10:30 AM arrives PDX at 9/16/00, 12:00 AM"));
+      assertThat(flightString,equalTo("Flight 100 departs PDX at 9/16/00, 10:30 AM arrives PDX at 9/16/00, 12:00 PM"));
   }
 
 
@@ -125,24 +125,24 @@ public class FlightTest {
 
   @Test
   void testCompareFlightSameSrcMainEarly() {
-    Flight mainFlight = new Flight("100","PDX","09/16/2000 10:00 am","PDX","9/16/2000 12:00 am");
-    Flight compareFlight = new Flight("100","PDX","09/16/2000 10:30 am","PDX","9/16/2000 12:20 am");
+    Flight mainFlight = new Flight("100","PDX","09/16/2000 10:00 am","PDX","9/16/2000 12:00 PM");
+    Flight compareFlight = new Flight("100","PDX","09/16/2000 10:30 am","PDX","9/16/2000 12:20 PM");
 
     int value = mainFlight.compareTo(compareFlight);
     assert (value == -1);
   }
   @Test
   void testCompareFlightSameSrcMainLate() {
-    Flight mainFlight = new Flight("100","PDX","09/16/2000 10:30 am","PDX","9/16/2000 12:00 am");
-    Flight compareFlight = new Flight("100","PDX","09/16/2000 10:10 am","PDX","9/16/2000 12:20 am");
+    Flight mainFlight = new Flight("100","PDX","09/16/2000 10:30 am","PDX","9/16/2000 12:00 pm");
+    Flight compareFlight = new Flight("100","PDX","09/16/2000 10:10 am","PDX","9/16/2000 12:20 pm");
 
     int value = mainFlight.compareTo(compareFlight);
     assert (value == 1);
   }
   @Test
   void testComparetoSameDepart() {
-    Flight mainFlight = new Flight("100","PDX","09/16/2000 10:30 am","PDX","9/16/2000 12:00 am");
-    Flight compareFlight = new Flight("100","PDX","09/16/2000 10:30 am","PDX","9/16/2000 12:20 am");
+    Flight mainFlight = new Flight("100","PDX","09/16/2000 10:30 am","PDX","9/16/2000 12:00 pm");
+    Flight compareFlight = new Flight("100","PDX","09/16/2000 10:30 am","PDX","9/16/2000 12:20 pm");
 
     int value = mainFlight.compareTo(compareFlight);
     assertEquals(value,0);

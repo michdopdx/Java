@@ -1,6 +1,7 @@
 package edu.pdx.cs410J.michdo;
 
 import edu.pdx.cs410J.InvokeMainTestCase;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -27,27 +28,27 @@ class Project2IT extends InvokeMainTestCase {
   @Test
   void filenameNoExtension ()
   {
-      MainMethodResult result = invokeMain("-textFile", "Test" ,"-print","JetBlue","100","PDX","9/16/2023","10:30","am","PDX","9/16/2023","12:00","am");
-      assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs PDX at 9/16/23, 10:30 AM arrives PDX at 9/16/23, 12:00 AM"));
+      MainMethodResult result = invokeMain("-textFile", "Test" ,"-print","JetBlue","100","PDX","9/16/2023","10:30","am","PDX","9/16/2023","12:00","pm");
+      assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs PDX at 9/16/23, 10:30 AM arrives PDX at 9/16/23, 12:00 PM"));
   }
 
     @Test
     void filenameWithExtension ()
     {
-        MainMethodResult result = invokeMain("-textFile", "Test.txt" ,"-print","JetBlue","100","PDX","9/16/2023","10:30","am","PDX","9/16/2023","12:00","am");
-        assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs PDX at 9/16/23, 10:30 AM arrives PDX at 9/16/23, 12:00 AM"));
+        MainMethodResult result = invokeMain("-textFile", "Test.txt" ,"-print","JetBlue","100","PDX","9/16/2023","10:30","am","PDX","9/16/2023","12:00","pm");
+        assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs PDX at 9/16/23, 10:30 AM arrives PDX at 9/16/23, 12:00 PM"));
     }
     @Test
     void testWithAbsolutePathExtension ()
     {
-        MainMethodResult result = invokeMain("-textFile", "../airline/Absol.txt" ,"-print","JetBlue","100","PDX","9/16/2023","10:30","am","PDX","9/16/2023","12:00","am");
-        assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs PDX at 9/16/23, 10:30 AM arrives PDX at 9/16/23, 12:00 AM"));
+        MainMethodResult result = invokeMain("-textFile", "../airline/Absol.txt" ,"-print","JetBlue","100","PDX","9/16/2023","10:30","am","PDX","9/16/2023","12:00","pm");
+        assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs PDX at 9/16/23, 10:30 AM arrives PDX at 9/16/23, 12:00 PM"));
     }
     @Test
     void testWithAbsolutePathNoExtension ()
     {
-        MainMethodResult result = invokeMain("-textFile", "../airline/Absol" ,"-print","JetBlue","100","PDX","9/16/2023","10:30","am","PDX","9/16/2023","12:00","am");
-        assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs PDX at 9/16/23, 10:30 AM arrives PDX at 9/16/23, 12:00 AM"));
+        MainMethodResult result = invokeMain("-textFile", "../airline/Absol" ,"-print","JetBlue","100","PDX","9/16/2023","10:30","am","PDX","9/16/2023","12:00","pm");
+        assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs PDX at 9/16/23, 10:30 AM arrives PDX at 9/16/23, 12:00 PM"));
     }
 
   @Test
@@ -64,8 +65,8 @@ class Project2IT extends InvokeMainTestCase {
 
     @Test
     void testWithPrefectCommandLine(){
-        MainMethodResult result = invokeMain("-print","JetBlue","100","PDX","9/16/2023","10:30","am","PDX","9/16/2023","12:00","am");
-        assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs PDX at 9/16/23, 10:30 AM arrives PDX at 9/16/23, 12:00 AM"));
+        MainMethodResult result = invokeMain("-print","JetBlue","100","PDX","9/16/2023","10:30","am","PDX","9/16/2023","12:00","pm");
+        assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 departs PDX at 9/16/23, 10:30 AM arrives PDX at 9/16/23, 12:00 PM"));
     }
     @Test
     void testExceedingArguments(){
@@ -153,5 +154,20 @@ class Project2IT extends InvokeMainTestCase {
     void InvalidArrival() {
         MainMethodResult result = invokeMain("-print","JetBlue","100","abc","9/16/2023","10:30","am","def","9/16/2023/1","12:00","am");
         assertThat(result.getTextWrittenToStandardError(),containsString("Invalid Arrival"));
+    }
+
+    @Test
+    void prettyprintonly ()
+    {
+        MainMethodResult result = invokeMain("-pretty","-","JetBlue","100","PDX","9/16/2023","10:30","am","PDX","9/16/2023","12:00","pm");
+        assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 One Way Trip from Portland, OR To Portland, OR Flight Is Scheduled To Depart From Portland, OR Airport \n" +
+                "On Saturday, September 16, 2023, 10:30 AM, And Arriving At Portland, OR Airport at Saturday, September 16, 2023, 12:00 PM. The Duration Of The Flight is 90 Minutes"));
+    }
+
+    @Test
+    void testprettyprintdashwithairlinetestfile() {
+        MainMethodResult result = invokeMain("-pretty","-", "-textFile","Test","JetBlue","100","PDX","9/16/2023","10:30","am","PDX","9/16/2023","12:00","pm");
+        assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 One Way Trip from Portland, OR To Portland, OR Flight Is Scheduled To Depart From Portland, OR Airport \n" +
+                "On Saturday, September 16, 2023, 10:30 AM, And Arriving At Portland, OR Airport at Saturday, September 16, 2023, 12:00 PM. The Duration Of The Flight is 90 Minutes"));
     }
 }

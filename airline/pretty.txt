@@ -1,6 +1,15 @@
-Jet: Flight 100 One Way Trip from Allentown, PA To Portland, OR Flight Is Scheduled To Depart From Allentown, PA Airport 
-On Saturday, September 16, 2023, 8:00 PM, And Arriving At Portland, OR Airport at Sunday, September 17, 2023, 9:00 AM. The Duration Of The Flight is 780 Minutes 
+Jet: Flight 100 One Way Trip from Cincinnati, OH To Dubuque, IA Flight Is Scheduled To Depart From Cincinnati, OH Airport 
+On Thursday, March 2, 2023, 12:57 PM, And Arriving At Dubuque, IA Airport at Thursday, March 2, 2023, 4:00 PM. The Duration Of The Flight is 183 Minutes 
 
-Jet: Flight 100 One Way Trip from Portland, OR To Portland, OR Flight Is Scheduled To Depart From Portland, OR Airport 
-On Saturday, September 16, 2023, 11:00 PM, And Arriving At Portland, OR Airport at Sunday, September 17, 2023, 9:00 AM. The Duration Of The Flight is 600 Minutes 
+Jet: Flight 100 One Way Trip from Cincinnati, OH To Dubuque, IA Flight Is Scheduled To Depart From Cincinnati, OH Airport 
+On Thursday, March 2, 2023, 12:57 PM, And Arriving At Dubuque, IA Airport at Thursday, March 2, 2023, 4:00 PM. The Duration Of The Flight is 183 Minutes 
+
+Jet: Flight 1100 One Way Trip from Denver, CO To Los Angeles, CA Flight Is Scheduled To Depart From Denver, CO Airport 
+On Tuesday, January 10, 2023, 1:00 PM, And Arriving At Los Angeles, CA Airport at Tuesday, January 10, 2023, 3:45 PM. The Duration Of The Flight is 165 Minutes 
+
+Jet: Flight 1000 One Way Trip from Harlingen, TX To Fresno, CA Flight Is Scheduled To Depart From Harlingen, TX Airport 
+On Monday, January 9, 2023, 9:00 AM, And Arriving At Fresno, CA Airport at Monday, January 9, 2023, 6:28 PM. The Duration Of The Flight is 568 Minutes 
+
+Jet: Flight 1000 One Way Trip from Harlingen, TX To Fresno, CA Flight Is Scheduled To Depart From Harlingen, TX Airport 
+On Monday, January 9, 2023, 9:00 AM, And Arriving At Fresno, CA Airport at Monday, January 9, 2023, 6:28 PM. The Duration Of The Flight is 568 Minutes 
 
