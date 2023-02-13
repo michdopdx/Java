@@ -3,6 +3,9 @@ package edu.pdx.cs410J.michdo;
 import edu.pdx.cs410J.ParserException;
 import java.io.*;
 import java.security.InvalidParameterException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -11,61 +14,20 @@ import java.util.*;
 public class Project2 {
 
   /**
-   * Returns true or false depending on if the argument passes is a valid date or time.
-   * The argument will contain a colon which indicates time, or / for dates.
-   * The dateAndTime will then be parsed into their respective components.
-   * The components will then be verified.
-   *
-   * @param dateAndTime A string that contains either a "/" or a ":".
-   * @return True if this string is a valid date or time, false otherwise.
-   * @throws IllegalArgumentException If the components in dateAndTime are not numbers.
-   * @throws InvalidParameterException If the numbers exceed expected values for each component.
+   * Checks if the format of date is in pattern MM/dd/yyyy hh:mm a.
+   * @param dateTime The date which is being checked for formatting.
+   * @return True, is argument follow format, else false.
    */
-  static boolean isValidDateAndTime(String dateAndTime) {
-    if (dateAndTime.contains("/")) {
-      int firstSlash = dateAndTime.indexOf("/");
-      int secondSlash = dateAndTime.indexOf("/", firstSlash + 1);
-
-      if (firstSlash > 0 && secondSlash > 0) {
-        String month = dateAndTime.substring(0, firstSlash);
-        String day = dateAndTime.substring(firstSlash + 1, secondSlash);
-        String year = dateAndTime.substring(secondSlash + 1, dateAndTime.length());
-        int months;
-        int days;
-        int years;
-
-        if (checkForInt(month) && checkForInt(day) && (checkForInt(year) && year.length() == 4)) {
-          months = Integer.parseInt(month);
-          days = Integer.parseInt(day);
-          years = Integer.parseInt(year);
-          if (months <= 12 && days <= 31 && years > 0) {
-            return true;
-          } else {
-            throw new InvalidParameterException("Date Was Incorrect. Was: " + dateAndTime + " Expected Format mm/dd/yyyy");
-          }
-        } else {
-          throw new IllegalArgumentException("Date Was Invalid. Was: " + dateAndTime + " Example 09/16/2000");
-        }
-      }
+  public static boolean formatDateAndTime(String dateTime)
+  {
+    DateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+    format.setLenient(false);
+    try{
+      format.parse(dateTime);
+      return true;
+    }catch (ParseException e) {
+      return false;
     }
-    if (dateAndTime.contains(":")) {
-      int colonLocation = dateAndTime.indexOf(":");
-      String hour = dateAndTime.substring(0, colonLocation);
-      String min = dateAndTime.substring(colonLocation + 1, dateAndTime.length());
-
-      if (checkForInt(hour) && checkForInt(min)) {
-        int hours = Integer.parseInt(hour);
-        int minuets = Integer.parseInt(min);
-        if (hours <= 24 && minuets <= 59) {
-          return true;
-        } else {
-          throw new InvalidParameterException("Time Was Incorrect. Was: " + dateAndTime + " Expected Format hh:mm");
-        }
-      } else {
-        throw new IllegalArgumentException("Time Was Non Number. Was: " + dateAndTime + " Example 10:30");
-      }
-    }
-    return false;
   }
 
   /**
@@ -131,39 +93,12 @@ public class Project2 {
               "*: Arrival date -> The date of arrival(Formatted as mm/dd/yyyy) \n" +
               "*: Arrival time -> The time of departure(Formatted as hh:mm \n " +
               "An example: java -jar target/airline-2023.0.0.jar -print JetBlue 100 abc 9/16/2023 10:30 def 9/16/2023 12:30\n");
-    } else {
-      for (int i = 0; i < args.length; i++) {
-        if (args[i].contains("-")) {
-          if (args[i].contains("-textFile")) {
-            if(!args[i +1].contains(".txt")) {
-              file = args[i +1] + ".txt";
-              args[i +1] = file;
-            }
-            else{
-              file = args[i +1];
-            }
-            options++;
-          }
-          options++;
-        }
-      }
-      String[] option = Arrays.copyOfRange(args, 0, options);
-      String[] arguments = Arrays.copyOfRange(args, options, args.length);
-      if (args.length - options > 8) {
-        System.err.println("The Number Of Arguments Has Exceeded The Limits");
-        return;
-      }
-      if (arguments.length < 8) {
-        System.err.println("Missing Command Line Argument");
-        return;
-      }
-
-      for (String op : option) {
-        if (op.equals("-print") || op.equals("-README") || op.equals("-textFile") || op.contains(".txt")) {
-          if (op.equals("-print")) {
-            hasPrint = true;
-          }
-          if (op.equals("-README")) {
+      return;
+    }
+    for (int i = 0; i < args.length; i++) {
+      if (args[i].contains("-") || args[i].contains(".txt")) {
+        if (args[i].contains("-README") || args[i].contains("-print") || args[i].contains("-textFile") || (args[i].contains("-pretty")) || args[i].contains(".txt") || args[i].equals("-")) {
+          if (args[i].contains("-README")) {
             try {
               InputStream readme = Project2.class.getResourceAsStream("README.txt");
               BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
@@ -177,86 +112,82 @@ public class Project2 {
               return;
             }
           }
-          if (op.equals("-textFile")) {
-            hasFile = true;
+          else if (args[i].contains("-print")) {
+            options++;
+          }
+
+          else if (args[i].contains(".txt")) {
+            options++;
+          }
+
+          else if (args[i].equals("-")) {
+            options++;
+          }
+          else if (args[i].contains("-textFile")) {
+            if (!args[i + 1].contains(".txt") && !args[i + 1].contains("-")) {
+              file = args[i + 1] + ".txt";
+              args[i + 1] = file;
+            }
+            else {
+              file = args[i + 1];
+            }
+            options++;
           }
         }
-        else {
-          System.err.println(op + " option does not exist");
-          return;
+      }
+    }
+
+    String[] option = Arrays.copyOfRange(args, 0, options);
+    String[] arguments = Arrays.copyOfRange(args, options, args.length);
+
+
+    if (args.length - options > 8) {
+      System.err.println("Unknown command, The Number Of Arguments Has Exceeded The Limits");
+      return;
+    }
+    if (arguments.length < 8) {
+      System.err.println("Missing Command Line Argument");
+      return;
+    }
+
+    for (String op : option) {
+      if (op.equals("-print") || op.equals("-README") || op.equals("-textFile")  || op.equals("-pretty")|| op.contains(".txt")) {
+        if (op.equals("-print")) {
+          hasPrint = true;
+        }
+        if (op.equals("-textFile")) {
+          hasFile = true;
         }
       }
-
-      name = arguments[0];
-      if (checkForInt(arguments[1])) {
-        flightNum = Integer.parseInt(arguments[1]);
-      } else {
-        System.err.println("Flight Number Entered Is Not A Number");
+      else {
+        System.err.println(op + " option does not exist");
         return;
       }
+    }
+    name = arguments[0];
 
-      try {
-        if (arguments[2].length() == 3) {
-          if (checkValidCode(arguments[2])) {
-            src = arguments[2];
-          } else {
-            System.err.println("The Source Code You Entered " + arguments[2] + " Contains Number. Code Can Not Have Number");
-            return;
-          }
-        } else {
-          System.err.println("The Source Code You Have Entered is " + arguments[2].length() + " Letters Long, Must Be Three");
-          return;
-        }
-      } catch (Exception e) {
+    String date = arguments[3] + " " + arguments[4];
+    if(formatDateAndTime(date)) {
+      depart = date;
+    }
+    else {
+      System.err.println("Invalid Departure. Departure entered was, " + arguments[3] + " " + arguments[4] + " Expected Format mm/dd/yy hh:mm");
+      return;
+    }
+    date = arguments[6] + " " + arguments[7];
+    if(formatDateAndTime(date)){
+      arrival = date;
+    }
+    else {
+      System.err.println("Invalid Arrival. Arrival entered was, " + arguments[6] + " " + arguments[7] + " Expected Format mm/dd/yy hh:mm");
+      return;
+    }
 
-      }
-
+    Airline airline;
+    Flight flight;
       try {
-        if(isValidDateAndTime(arguments[3]))
-        {
-          depart = arguments[3];
-        }
-        if(isValidDateAndTime(arguments[4]))
-        {
-          depart = depart + " " + arguments[4];
-        }
-      }catch (Exception e) {
-        System.err.println("Departure " + e.getMessage());
-        return;
-      }
-
-      if(arguments[5].length() == 3) {
-        if(checkValidCode(arguments[5])) {
-          dest = arguments [5];
-        }
-        else {
-          System.err.println("The Destination Code You Entered " + arguments[5] + " Contains Number. Code Can Not Have Number");
-          return;
-        }
-      }
-      try {
-        if(isValidDateAndTime(arguments[6]))
-        {
-          arrival = arguments[6];
-        }
-        if(isValidDateAndTime(arguments[7]))
-        {
-          arrival = arrival + " " + arguments[7];
-        }
-      }catch (Exception e) {
-        System.err.println("Arrival " + e.getMessage());
-        return;
-      }
-
-      try {
-        Airline check = new Airline(name);
-      } catch (NullPointerException e) {
-        System.err.println(e.getMessage());
-        return;
-      }
-      Airline airline = new Airline(name);
-      try {
-        Flight flight = new Flight(flightNum, src, depart, dest, arrival);
+        airline = new Airline(name);
+        flight = new Flight(arguments[1], arguments[2], depart, arguments[5], arrival);
         airline.addFlight(flight);
       } catch (NullPointerException e) {
         System.err.println(e.getMessage());
@@ -271,41 +202,61 @@ public class Project2 {
 
       if(hasFile) {
         File airlineFile = new File(file);
-
         try {
-          airlineFile.createNewFile();
-          FileReader readFromFile = new FileReader(file);
-          TextParser parseIntoObject = new TextParser(readFromFile);
-          int value = parseIntoObject.checkAirline(airline.getName());
-          if(value == 1)
-          {
-            FileWriter fw = new FileWriter(airlineFile);
-            TextDumper dumpIntoFile = new TextDumper(fw);
-            dumpIntoFile.dump(airline);
+          if(airlineFile.getParentFile() != null) {
+            airlineFile.getParentFile().mkdirs();
+            airlineFile.createNewFile();
           }
-          else if(value == 2) { //The name matches so now i need to append the contents
-            FileWriter fw = new FileWriter(airlineFile,true);
-            TextDumper appendToFile = new TextDumper(fw);
-            appendToFile.appendFlightToFile(airline);
-          }
-          else {
-            System.err.println("File Does not contain the airline " + airline.getName());
-            return;
-          }
-        }catch (Exception e) {
-          System.err.println(e.getMessage());
+          else
+            airlineFile.createNewFile();
+        }catch (IOException e) {
+          System.err.println("Input error when creating " + file);
           return;
         }
-        try{
-          FileReader readFromFile = new FileReader(file);
-          TextParser parseIntoObject = new TextParser(readFromFile);
-          airlineFromFile = parseIntoObject.parse();
-          Collection<Flight> Flights = airlineFromFile.getFlights();
-        }catch (ParserException e) {
-          System.err.println(e.getMessage());
-          return;
-        }catch (FileNotFoundException e) {
+        if (airlineFile != null) {
+          try {
+            FileReader readFromFile = new FileReader(airlineFile);
+            TextParser parseIntoObject = new TextParser(readFromFile);
+            int value = parseIntoObject.checkAirline(airline.getName());
+            if (value == 1) {
+              FileWriter fw = new FileWriter(airlineFile);
+              TextDumper dumpIntoFile = new TextDumper(fw);
+              dumpIntoFile.dump(airline);
+            } else if (value == 2) {
+              FileWriter fw = new FileWriter(airlineFile, true);
+              TextDumper appendToFile = new TextDumper(fw);
+              appendToFile.appendFlightToFile(airline);
+            } else {
+              System.err.println("File Does not contain the airline " + airline.getName());
+              return;
+            }
+          } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return;
+          }
 
+          try {
+            FileReader readFromFile = new FileReader(airlineFile);
+            TextParser parseIntoObject = new TextParser(readFromFile);
+            airlineFromFile = parseIntoObject.parse();
+            try {
+              FileWriter softFw = new FileWriter(airlineFile);
+              TextDumper dumpIntoFile = new TextDumper(softFw);
+              dumpIntoFile.dump(airlineFromFile);
+            } catch (IOException e) {
+              System.err.println("File, " + airlineFile + " Doesn't exist");
+              return;
+            }
+          } catch (InvalidParameterException e) {
+            System.err.println(e.getMessage());
+            return;
+          } catch (ParserException e) {
+            System.err.println(e.getMessage());
+            return;
+          } catch (FileNotFoundException e) {
+            System.err.println("File " + file + "Not Found");
+            return;
+          }
         }
       }
       if (hasPrint) {
@@ -316,4 +267,3 @@ public class Project2 {
       }
     }
   }
-}

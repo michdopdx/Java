@@ -4,6 +4,7 @@ import edu.pdx.cs410J.AirlineParser;
 import edu.pdx.cs410J.ParserException;
 
 import java.io.*;
+import java.security.InvalidParameterException;
 
 /**
  * Class <code>TextParser</code> used to read Airline and its Flights from a file.
@@ -18,6 +19,7 @@ public class TextParser implements AirlineParser<Airline> {
 
   /**
    * This constructor will create a new instance of <code>TextParser</code>
+   *
    * @param reader File Reader
    */
   public TextParser(Reader reader) {
@@ -26,6 +28,7 @@ public class TextParser implements AirlineParser<Airline> {
 
   /**
    * Will search file for given name, if the name is found or the file is empty return true.
+   *
    * @param name Name of the Airline
    * @return True if name is found or the file is empty, false otherwise.
    */
@@ -33,13 +36,13 @@ public class TextParser implements AirlineParser<Airline> {
     try {
       BufferedReader br = new BufferedReader(this.reader);
       String line = br.readLine();
-      if(br.readLine() == null) {
+      if (br.readLine() == null) {
         return 1;
       }
-      if(line.equals(name)) {
+      if (line.equals(name)) {
         return 2;
       }
-    }catch (Exception e) {
+    } catch (Exception e) {
 
     }
     return 0;
@@ -47,6 +50,7 @@ public class TextParser implements AirlineParser<Airline> {
 
   /**
    * Will parse a file and create and airline and its flights
+   *
    * @return A new Airline created from parsing file.
    * @throws ParserException Will be thrown if NO Airline was found.
    */
@@ -68,31 +72,31 @@ public class TextParser implements AirlineParser<Airline> {
         if (!line.contains("|")) {
           airlineName = line;
           airline = new Airline(airlineName);
-        }
-        if (line.contains("|")) {
+        } else if (line.contains("|")) {
           String[] flightData = line.split("\\|");
           flightNumber = flightData[0];
           flightSrc = flightData[1];
           flightDepart = flightData[2];
           flightDest = flightData[3];
           flightArrival = flightData[4];
-        }
-        if (airlineName != null) {
+
           try {
-            flight = new Flight(Integer.parseInt(flightNumber), flightSrc, flightDepart, flightDest, flightArrival);
+            flight = new Flight(flightNumber, flightSrc, flightDepart, flightDest, flightArrival);
             airline.addFlight(flight);
-          } catch (Exception e) {
+          } catch (NullPointerException e) {
             System.err.println(e.getMessage());
+          } catch (InvalidParameterException e) {
+            throw new InvalidParameterException(e.getMessage());
           }
         }
       }
-      if(airlineName == null)
-      {
-        throw new ParserException("");
+      if (airlineName == null) {
+        throw new ParserException("No AirLine was found");
       }
-      return airline;
+    } catch (InvalidParameterException e) {
+      throw new ParserException("While parsing airline text" + e.getMessage());
     } catch (IOException e) {
-      throw new ParserException("While parsing airline text", e);
     }
+    return airline;
   }
 }

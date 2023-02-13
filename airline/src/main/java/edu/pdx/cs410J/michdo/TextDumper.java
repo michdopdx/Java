@@ -57,7 +57,6 @@ public class TextDumper implements AirlineDumper<Airline> {
   public void dump(Airline airline) {
     Collection<Flight> listOfFlights = airline.getFlights();
     PrintWriter pw = new PrintWriter(this.writer);
-
     try {
       pw.println(airline.getName());
       for(Flight flight:listOfFlights) {

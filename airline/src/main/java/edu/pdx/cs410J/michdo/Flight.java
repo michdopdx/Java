@@ -2,6 +2,9 @@ package edu.pdx.cs410J.michdo;
 
 import edu.pdx.cs410J.AbstractFlight;
 import java.security.InvalidParameterException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.MissingFormatArgumentException;
 
 /** Class representation of a flight.
@@ -41,55 +44,118 @@ public class Flight extends AbstractFlight {
    * @throws NullPointerException Is thrown if any argument is null.
    * @throws InvalidParameterException Is thrown if the flight of the number is less than 0.
    */
-  public Flight(int flight, String src, String depart, String dest, String ar)
+  public Flight(String flight, String src, String depart, String dest, String ar)
   {
-    if(flight == -1)
-    {
-      throw new NullPointerException("No Flight Number Was entered");
+    //checkNullValue(flight,"Flight Number");
+    if (checkForFlightInt(flight)) {
+      this.flightNumber = Integer.parseInt(flight);
+    } else {
+      throw new InvalidParameterException("Flight Number Entered Is Not A Number");
     }
-    else if(flight < 0)
+		checkNullValue(src,"Source");
+		if (src.length() == 3) {
+				if (checkValidCode(src)) {
+						this.source = src.toUpperCase();
+				} else {
+						throw new InvalidParameterException("The Source Code You Entered " + src + " Does not exist");
+				}
+		} else {
+				throw new InvalidParameterException("The Source Code You Have Entered is " + src.length() + " Letters Long, Must Be Three");
+		}
+
+    if(depart != null)
     {
-      throw new InvalidParameterException("Flight Number Entered Is NOT Valid");
+      if(checkFormatDateAndTime(depart)) {
+        this.departure = depart;
+      }
+      else
+        throw new InvalidParameterException(" Departure Entered Was, " + depart + " Expected, (dd/mm/yyyy hh:mm)");
     }
-    this.flightNumber = flight;
+    else{
+      throw new NullPointerException("Missing Departure");
+    }
 
-    checkNullValue(src);
-    this.source = src;
+    checkNullValue(dest,"Destination");
+    if (dest.length() == 3) {
+      if (checkValidCode(dest)) {
+        this.destination = dest.toUpperCase();
+      } else {
+        throw new InvalidParameterException("The Destination Code You Entered " + dest + " Does not exist");
+      }
+    } else {
+      throw new InvalidParameterException("The Destination Code You Have Entered is " + dest.length() + " Letters Long, Must Be Three");
+    }
 
-    checkNullValue(depart);
-    checkFormatForDateAndTime(depart);
-    this.departure = depart;
+    if(ar != null)
+    {
+      if(checkFormatDateAndTime(ar)) {
+        this.arrival = ar;
+      }
+      else
+        throw new InvalidParameterException(" Arrival Entered Was, " + ar + " Expected, (dd/mm/yyyy hh:mm)");
+    }
+    else{
+      throw new NullPointerException("Missing Arrival");
+    }
+	}
 
-    checkNullValue(dest);
-    this.destination = dest;
+  /**
+   * Checks if a given string contains a number. If a number is present return false, else true.
+   *
+   * @param code Will search this string for numbers.
+   * @return True if no number is fond in string else false.
+   */
+  public static boolean checkValidCode (String code)
+  {
+    char[] flightCode = code.toCharArray();
+    for(char letter:flightCode) {
+      if(Character.isDigit(letter))
+      {
+        return false;
+      }
+    }
+    return true;
+  }
 
-    checkNullValue(ar);
-    checkFormatForDateAndTime(ar);
-    this.arrival = ar;
+  /**
+   * Used to check if the format of date is in pattern MM/dd/yyyy hh:mm a.
+   * @param dateTime The date of type string.
+   * @return True if the argument follows the format, else false.
+   */
+  public static boolean checkFormatDateAndTime(String dateTime)
+  {
+    DateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+    format.setLenient(false);
+    try{
+      format.parse(dateTime);
+      return true;
+    }catch (ParseException e) {
+      return false;
+    }
+  }
+
+  /**
+   * Checks if a string can be turned into a valid flight number.
+   * @param check String input being checked if it is a valid number.
+   * @return True if check is a valid number else false.
+   */
+  public static boolean checkForFlightInt (String check) {
+    try {
+      Integer.parseInt(check);
+      return true;
+    } catch (NumberFormatException e) {
+      return false;
+    }
   }
 
   /**
    * Checks if an object is null.
-   * <p>
    * @param obj Object that needs to be checked.
    * @throws NullPointerException If the object is null.
-   *
    */
-  private static void checkNullValue(Object obj) {
+  public static void checkNullValue(Object obj,String type) {
     if(obj == null) {
-      throw new NullPointerException("Missing Required Argument");
-    }
-  }
-
-  /**
-   * Verifies if the date and time string has both a slash and colon.
-   * <p>
-   * @param dateTime A string that contains the date and the time
-   * @throws MissingFormatArgumentException If the argument string does not contain slash or a colon.
-   */
-  private static void checkFormatForDateAndTime(String dateTime) {
-    if(!dateTime.contains("/") || !dateTime.contains(":")) {
-      throw new MissingFormatArgumentException("Missing Date or Time from departure or arrival");
+      throw new NullPointerException("Missing " + type);
     }
   }
 
@@ -137,5 +203,4 @@ public class Flight extends AbstractFlight {
   public String getArrivalString() {
     return this.arrival;
   }
-
 }

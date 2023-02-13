@@ -47,9 +47,9 @@ public class TextParserTest {
     assertThat(airline.getName(), equalTo("Test Airline"));
     for(Flight flight :Flights) {
       assertThat(flight.getNumber(),equalTo(100));
-      assertThat(flight.getSource(),equalTo("abc"));
+      assertThat(flight.getSource(),equalTo("ABC"));
       assertThat(flight.getDepartureString(),equalTo("9/16/2023 11:30"));
-      assertThat(flight.getDestination(),equalTo("def"));
+      assertThat(flight.getDestination(),equalTo("DEF"));
       assertThat(flight.getArrivalString(),equalTo("9/16/2023 12:30"));
     }
   }

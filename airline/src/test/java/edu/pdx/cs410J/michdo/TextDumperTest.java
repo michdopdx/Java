@@ -31,30 +31,32 @@ public class TextDumperTest {
     String airlineName = "Test Airline";
     Airline airline = new Airline(airlineName);
 
-    Flight flight = new Flight(100,"pfx", "9/9/2009 1:00", "pff", "9/9/2009 2:00" );
+    Flight flight = new Flight("100","pfx", "9/9/2009 1:00", "pff", "9/9/2009 2:00" );
     airline.addFlight(flight);
     StringWriter sw = new StringWriter();
     TextDumper dumper = new TextDumper(sw);
     dumper.dump(airline);
 
     String text = sw.toString();
-    assertThat(text, containsString("100|pfx|9/9/2009 1:00|pff|9/9/2009 2:00"));
+    assertThat(text, containsString("Test Airline\n" +
+            "100|PFX|9/9/2009 1:00|PFF|9/9/2009 2:00"));
   }
 
   @Test
   void addMultiFlights() {
     String airlineName = "Test Airline";
     Airline airline = new Airline(airlineName);
-    Flight flight = new Flight(100,"pfx", "9/9/2009 1:00", "pff", "9/9/2009 2:00" );
+    Flight flight = new Flight("100","pfx", "9/9/2009 1:00", "pff", "9/9/2009 2:00" );
     airline.addFlight(flight);
-    Flight flight2 = new Flight(500,"pfx", "9/9/2009 1:00", "set", "9/9/2009 2:00" );
+    Flight flight2 = new Flight("500","pfx", "9/9/2009 1:00", "set", "9/9/2009 2:00" );
     airline.addFlight(flight2);
     StringWriter sw = new StringWriter();
     TextDumper dumper = new TextDumper(sw);
     dumper.dump(airline);
     String text = sw.toString();
-    assertThat(text, containsString("100|pfx|9/9/2009 1:00|pff|9/9/2009 2:00"));
-    assertThat(text, containsString("500|pfx|9/9/2009 1:00|set|9/9/2009 2:00"));
+    assertThat(text, containsString("Test Airline\n" +
+            "100|PFX|9/9/2009 1:00|PFF|9/9/2009 2:00\n" +
+            "500|PFX|9/9/2009 1:00|SET|9/9/2009 2:00"));
 
   }
 
@@ -64,7 +66,7 @@ public class TextDumperTest {
     String airlineName = "Test Airline";
     Airline airline = new Airline(airlineName);
 
-    Flight flight = new Flight(100,"pdx", "9/9/2009 1:00", "ste", "9/9/2009 2:00" );
+    Flight flight = new Flight("100","pdx", "9/9/2009 1:00", "ste", "9/9/2009 2:00" );
     airline.addFlight(flight);
     StringWriter sw = new StringWriter();
     TextDumper dumper = new TextDumper(sw);

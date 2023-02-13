@@ -43,32 +43,25 @@ class Project2Test {
   }
 
   @Test
-  void checkForValidDate() {
+  void checkForValidDateTime() {
     boolean value;
-    value = Project2.isValidDateAndTime("09/16/2000");
-    value = Project2.isValidDateAndTime("9/6/2000");
-    value = Project2.isValidDateAndTime("09/06/0001");
+    value = Project2.formatDateAndTime("09/16/2000 10:00");
     assert (value == true);
-  }
-  @Test
-  void checkForInvalidDate() {
-    assertThrows(IllegalArgumentException.class, ()-> Project2.isValidDateAndTime("09/06/001"));
   }
 
   @Test
-  void checkForValidTime(){
+  void checkInvalidDate() {
     boolean value;
-    value = Project2.isValidDateAndTime("10:30");
-    value = Project2.isValidDateAndTime("24:30");
-    assert (value == true);
-  }
-  @Test
-  void checkForInvalidTime(){
-    assertThrows(InvalidParameterException.class, ()-> Project2.isValidDateAndTime("10:70"));
-    assertThrows(InvalidParameterException.class, ()-> Project2.isValidDateAndTime("50:40"));
-    assertThrows(InvalidParameterException.class, ()-> Project2.isValidDateAndTime("50:70"));
+    value = Project2.formatDateAndTime("09/xx/2000 10:00");
+    assert (value == false);
   }
 
+  @Test
+  void checkInvalidTime() {
+    boolean value;
+    value = Project2.formatDateAndTime("09/16/2000 xx:00");
+    assert (value == false);
+  }
   @Test
   void checkForInvalidCode() {
     boolean value;
@@ -81,8 +74,4 @@ class Project2Test {
     value = Project2.checkValidCode("ABC");
     assert (value == true);
   }
-
-
-
-
 }
