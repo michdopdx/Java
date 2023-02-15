@@ -91,8 +91,7 @@ public class Project3 {
 
       for (int i = 0; i < args.length; i++) {
         if (args[i].contains("-") || args[i].contains(".txt")) {
-          if(args[i].contains("-README") || args[i].contains("-print") || args[i].contains("-textFile") || (args[i].contains("-pretty")) || args[i].contains(".txt"))
-          {
+          if (args[i].contains("-README") || args[i].contains("-print") || args[i].contains("-textFile") || (args[i].contains("-pretty")) || args[i].contains(".txt") || args[i].equals("-")) {
             if (args[i].contains("-README")) {
               try {
                 InputStream readme = Project3.class.getResourceAsStream("README.txt");
@@ -108,11 +107,18 @@ public class Project3 {
               }
             }
 
-            if (args[i].contains("-print")) {
+            else if (args[i].contains("-print")) {
               options++;
             }
 
-            if (args[i].contains("-textFile")) {
+            else if (args[i].contains(".txt")) {
+              options++;
+            }
+
+            else if (args[i].equals("-")) {
+              options++;
+            }
+            else if (args[i].contains("-textFile")) {
               if (!args[i + 1].contains(".txt") && !args[i + 1].contains("-")) {
                 file = args[i + 1] + ".txt";
                 args[i + 1] = file;
@@ -125,28 +131,22 @@ public class Project3 {
               options++;
             }
 
-            if (args[i].contains("-pretty")) {
+            else if (args[i].contains("-pretty")) {
               if (!args[i + 1].contains(".txt") && !args[i + 1].equals("-")) {
                 prettyFile = args[i + 1] + ".txt";
                 args[i + 1] = prettyFile;
-              } else if (args[i + 1].equals("-")) {
-              } else {
+              }
+              else {
                 prettyFile = args[i + 1];
               }
               options++;
             }
-
-            if (args[i].contains(".txt")) {
-              options++;
-            }
           }
-          else
-            options ++;
         }
       }
 
+
       String[] option = Arrays.copyOfRange(args, 0, options);
-      //System.out.println(Arrays.toString(option));
       String[] arguments = Arrays.copyOfRange(args, options, args.length);
 
     if (args.length - options > 10) {
@@ -179,7 +179,6 @@ public class Project3 {
         }
       }
       name = arguments[0];
-
 
     String date = arguments[3] + " " + arguments[4] + " " + arguments[5];
     if(formatDateAndTime(date)) {
@@ -219,48 +218,62 @@ public class Project3 {
     if(hasFile) {
       File airlineFile = new File(file);
       try {
-        airlineFile.createNewFile();
-        FileReader readFromFile = new FileReader(file);
-        TextParser parseIntoObject = new TextParser(readFromFile);
-        int value = parseIntoObject.checkAirline(airline.getName());
-        if (value == 1) {
-          FileWriter fw = new FileWriter(airlineFile);
-          TextDumper dumpIntoFile = new TextDumper(fw);
-          dumpIntoFile.dump(airline);
-        } else if (value == 2) {
-          FileWriter fw = new FileWriter(airlineFile, true);
-          TextDumper appendToFile = new TextDumper(fw);
-          appendToFile.appendFlightToFile(airline);
-        } else {
-          System.err.println("File Does not contain the airline " + airline.getName());
-          return;
+        if(airlineFile.getParentFile() != null) {
+          airlineFile.getParentFile().mkdirs();
+          airlineFile.createNewFile();
         }
-      } catch (Exception e) {
-        System.err.println(e.getMessage());
+        else
+          airlineFile.createNewFile();
+      }catch (IOException e) {
+        System.err.println("Input error when creating " + file);
         return;
       }
-      try {
-        FileReader readFromFile = new FileReader(file);
-        TextParser parseIntoObject = new TextParser(readFromFile);
-        airlineFromFile = parseIntoObject.parse();
-        airlineFromFile.sortFlights();
+
+      if (airlineFile != null) {
         try {
-          FileWriter softFw = new FileWriter(airlineFile);
-          TextDumper dumpIntoFile = new TextDumper(softFw);
-          dumpIntoFile.dump(airlineFromFile);
-        }catch (IOException e) {
-          System.err.println("File, " + airlineFile +" Doesn't exist");
+          FileReader readFromFile = new FileReader(airlineFile);
+          TextParser parseIntoObject = new TextParser(readFromFile);
+          int value = parseIntoObject.checkAirline(airline.getName());
+          if (value == 1) {
+            FileWriter fw = new FileWriter(airlineFile);
+            TextDumper dumpIntoFile = new TextDumper(fw);
+            dumpIntoFile.dump(airline);
+          } else if (value == 2) {
+            FileWriter fw = new FileWriter(airlineFile, true);
+            TextDumper appendToFile = new TextDumper(fw);
+            appendToFile.appendFlightToFile(airline);
+          } else {
+            System.err.println("File Does not contain the airline " + airline.getName());
+            return;
+          }
+        } catch (Exception e) {
+          System.err.println(e.getMessage());
           return;
         }
-      } catch (InvalidParameterException e) {
-        System.err.println(e.getMessage());
-        return;
-      } catch (ParserException e) {
-        System.err.println(e.getMessage());
-        return;
-      } catch (FileNotFoundException e) {
-        System.err.println("File " + file + "Not Found");
-        return;
+
+        try {
+          FileReader readFromFile = new FileReader(airlineFile);  //use to be file
+          TextParser parseIntoObject = new TextParser(readFromFile);
+          airlineFromFile = parseIntoObject.parse();
+          airlineFromFile.sortFlights();
+          try {
+            FileWriter softFw = new FileWriter(airlineFile);
+            TextDumper dumpIntoFile = new TextDumper(softFw);
+            dumpIntoFile.dump(airlineFromFile);
+          } catch (IOException e) {
+            System.err.println("File, " + airlineFile + " Doesn't exist");
+            return;
+          }
+        } catch (InvalidParameterException e) {
+          System.err.println(e.getMessage());
+          return;
+        } catch (ParserException e) {
+          System.err.println(e.getMessage());
+          return;
+        } catch (FileNotFoundException e) {
+          System.err.println("File " + file + "Not Found");
+          return;
+        }
       }
     }
 

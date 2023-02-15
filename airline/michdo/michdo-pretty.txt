@@ -1,0 +1,33 @@
+Project3: Flight 100 One Way Trip from Cincinnati, OH To Dubuque, IA Flight Is Scheduled To Depart From Cincinnati, OH Airport 
+On Thursday, March 2, 2023, 12:57 PM, And Arriving At Dubuque, IA Airport at Thursday, March 2, 2023, 4:00 PM. The Duration Of The Flight is 183 Minutes 
+
+Project3: Flight 200 One Way Trip from Wausau/Stevens Point, WI To Durango, CO Flight Is Scheduled To Depart From Wausau/Stevens Point, WI Airport 
+On Tuesday, January 3, 2023, 12:14 PM, And Arriving At Durango, CO Airport at Friday, January 13, 2023, 2:45 PM. The Duration Of The Flight is 14551 Minutes 
+
+Project3: Flight 400 One Way Trip from Evansville, IN To Lafayette, LA Flight Is Scheduled To Depart From Evansville, IN Airport 
+On Saturday, March 4, 2023, 12:36 PM, And Arriving At Lafayette, LA Airport at Sunday, March 5, 2023, 8:19 PM. The Duration Of The Flight is 1903 Minutes 
+
+Project3: Flight 1000 One Way Trip from Harlingen, TX To Fresno, CA Flight Is Scheduled To Depart From Harlingen, TX Airport 
+On Monday, January 9, 2023, 9:00 AM, And Arriving At Fresno, CA Airport at Monday, January 9, 2023, 6:28 PM. The Duration Of The Flight is 568 Minutes 
+
+Project3: Flight 1200 One Way Trip from Lincoln, NE To Mcallen, TX Flight Is Scheduled To Depart From Lincoln, NE Airport 
+On Tuesday, January 10, 2023, 10:00 AM, And Arriving At Mcallen, TX Airport at Tuesday, January 10, 2023, 12:16 PM. The Duration Of The Flight is 136 Minutes 
+
+Project3: Flight 1200 One Way Trip from Lincoln, NE To Mcallen, TX Flight Is Scheduled To Depart From Lincoln, NE Airport 
+On Tuesday, January 10, 2023, 10:00 AM, And Arriving At Mcallen, TX Airport at Tuesday, January 10, 2023, 12:16 PM. The Duration Of The Flight is 136 Minutes 
+
+Project3: Flight 1200 One Way Trip from Lincoln, NE To Mcallen, TX Flight Is Scheduled To Depart From Lincoln, NE Airport 
+On Tuesday, January 10, 2023, 10:00 AM, And Arriving At Mcallen, TX Airport at Tuesday, January 10, 2023, 12:16 PM. The Duration Of The Flight is 136 Minutes 
+
+Project3: Flight 1200 One Way Trip from Lincoln, NE To Mcallen, TX Flight Is Scheduled To Depart From Lincoln, NE Airport 
+On Tuesday, January 10, 2023, 10:00 AM, And Arriving At Mcallen, TX Airport at Tuesday, January 10, 2023, 11:16 PM. The Duration Of The Flight is 796 Minutes 
+
+Project3: Flight 1200 One Way Trip from Lincoln, NE To Mcallen, TX Flight Is Scheduled To Depart From Lincoln, NE Airport 
+On Tuesday, January 10, 2023, 10:00 AM, And Arriving At Mcallen, TX Airport at Tuesday, January 10, 2023, 11:16 PM. The Duration Of The Flight is 796 Minutes 
+
+Project3: Flight 1200 One Way Trip from Lincoln, NE To Mcallen, TX Flight Is Scheduled To Depart From Lincoln, NE Airport 
+On Tuesday, January 10, 2023, 10:00 AM, And Arriving At Mcallen, TX Airport at Tuesday, January 10, 2023, 11:16 PM. The Duration Of The Flight is 796 Minutes 
+
+Project3: Flight 1200 One Way Trip from Lincoln, NE To Mcallen, TX Flight Is Scheduled To Depart From Lincoln, NE Airport 
+On Tuesday, January 10, 2023, 10:00 AM, And Arriving At Mcallen, TX Airport at Tuesday, January 10, 2023, 11:16 PM. The Duration Of The Flight is 796 Minutes 
+

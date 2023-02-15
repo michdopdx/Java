@@ -2,6 +2,7 @@ package java7;
 
 import com.sandwich.koan.Koan;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +17,7 @@ public class AboutDiamondOperator {
         String[] animals = {"Dog", "Cat", "Tiger", "Elephant", "Zebra"};
         //Generic type of array list inferred - empty <> operator
         List<String> animalsList = new ArrayList<>(Arrays.asList(animals));
-        assertEquals(animalsList, __);
+        assertEquals(animalsList, Arrays.asList(animals));
     }
 
     @Koan
@@ -24,7 +25,7 @@ public class AboutDiamondOperator {
         String[] animals = {"Dog", "Cat", "Tiger", "Elephant", "Zebra"};
         //type of new ArrayList<>() inferred from method parameter
         List<String> animalsList = fill(new ArrayList<>());
-        assertEquals(animalsList, __);
+        assertEquals(animalsList, Arrays.asList(animals));
     }
 
     private List<String> fill(List<String> list) {

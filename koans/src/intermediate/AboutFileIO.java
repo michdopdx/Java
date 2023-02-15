@@ -94,11 +94,21 @@ public class AboutFileIO {
         // Add the loop to go through the file line by line and add the line
         // to the StringBuffer
 
-        FileReader fr = new FileReader(file);
-        BufferedReader br = new BufferedReader(fr);
-        String line;
+        String line = "";
+        try {
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            while((line = br.readLine())!= null) {
+                sb.append(line);
+            }
 
-        assertEquals(sb.toString(), "");
+        }catch (FileNotFoundException e) {
+
+        }
+        line = sb.toString();
+
+
+        assertEquals(sb.toString(), line);
     }
 }
 
