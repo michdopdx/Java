@@ -12,11 +12,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
- * A unit test for code in the <code>Project1</code> class.  This is different
+ * A unit test for code in the <code>Project3</code> class.  This is different
  * from <code>Project1IT</code> which is an integration test (and can capture data
  * written to {@link System#out} and the like.
  */
-class Project2Test {
+class Project3Test {
 
   @Test
   void readmeCanBeReadAsResource() throws IOException {
