@@ -337,7 +337,7 @@ public class Project4 {
             dumper.dump(airline);
           }
 
-          else {
+          else{
             XmlParser parseCheck = new XmlParser(xml);
             int value = parseCheck.checkXmlAirline(airline.getName());
             if (value == 1) {
@@ -347,6 +347,10 @@ public class Project4 {
               airlineFromXml.sortFlights();
               XmlDumper dumpParsedAirline = new XmlDumper(xml);
               dumpParsedAirline.dump(airlineFromXml);
+            }
+            if(value == 0) {
+              System.err.println(airline.getName() + " Airlines Does not exist in " + xml);
+              return;
             }
           }
         } catch (InvalidParameterException e) {
