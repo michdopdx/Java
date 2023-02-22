@@ -20,7 +20,6 @@ public class ConverterTest extends InvokeMainTestCase {
 		}
 
 		@Test
-		@Disabled
 		void testPerfectcase() throws IOException {
 				MainMethodResult result = invokeMain("converter/test.txt","converter/copyOfvaild.xml");
 				XmlParser parse = new XmlParser(new File("converter/copyOfvaild.xml"));
