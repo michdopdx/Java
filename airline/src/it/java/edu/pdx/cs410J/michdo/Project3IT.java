@@ -3,20 +3,23 @@ package edu.pdx.cs410J.michdo;
 import edu.pdx.cs410J.InvokeMainTestCase;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.IOException;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
- * An integration test for the {@link Project3} main class.
+ * An integration test for the {@link Project4} main class.
  */
 class Project3IT extends InvokeMainTestCase {
 
     /**
-     * Invokes the main method of {@link Project3} with the given arguments.
+     * Invokes the main method of {@link Project4} with the given arguments.
      */
     private MainMethodResult invokeMain(String... args) {
-        return invokeMain( Project3.class, args );
+        return invokeMain( Project4.class, args );
     }
 
   /**
@@ -114,7 +117,7 @@ class Project3IT extends InvokeMainTestCase {
 
     @Test
     void testNullAirlineName (){
-        assertThrows(NullPointerException.class, ()-> invokeMain(Project3.class,"-print",null,"100","abc","9/16/2023","10:30","def","9/16/2023"));
+        assertThrows(NullPointerException.class, ()-> invokeMain(Project4.class,"-print",null,"100","abc","9/16/2023","10:30","def","9/16/2023"));
     }
 
     @Test
@@ -141,5 +144,21 @@ class Project3IT extends InvokeMainTestCase {
         MainMethodResult result = invokeMain("-pretty","-","JetBlue","100","PDX","9/16/2023","10:30","am","PDX","9/16/2023","12:00","pm");
         assertThat(result.getTextWrittenToStandardOut(),containsString("JetBlue: Flight 100 One Way Trip from Portland, OR To Portland, OR Flight Is Scheduled To Depart From Portland, OR Airport \n" +
                 "On Saturday, September 16, 2023, 10:30 AM, And Arriving At Portland, OR Airport at Saturday, September 16, 2023, 12:00 PM. The Duration Of The Flight is 90 Minutes"));
+    }
+
+    @Test
+    void addmultixml () throws IOException {
+        MainMethodResult result = invokeMain("-xmlFile","michdo/testMulti.xml","JetBlue","100","PDX","9/16/2023","10:30","am","PDX","9/17/2023","12:00","pm");
+        File file = new File("michdo/testMulti.xml");
+        XmlParser parse = new XmlParser(file);
+        int value = parse.checkXmlAirline("JetBlue");
+        assert value == 1;
+
+    }
+
+    @Test
+    void testInvalidXml () throws IOException {
+        MainMethodResult result = invokeMain("-xmlFile","invalidairlinexml.xml","Valid Airlines","400","PDX","9/16/2023","10:30","am","PDX","9/16/2023","12:00","pm");
+        assertThat(result.getTextWrittenToStandardError(),containsString("depart"));
     }
 }

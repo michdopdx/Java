@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE airline SYSTEM "http://www.cs.pdx.edu/~whitlock/dtds/airline.dtd">
+<airline>
+    <name>JetBlue</name>
+    <flight>
+        <number>100</number>
+        <src>PDX</src>
+        <depart>
+            <date day="16" month="9" year="2023"/>
+            <time hour="10" minute="30"/>
+        </depart>
+        <dest>PDX</dest>
+        <arrive>
+            <date day="16" month="5" year="2024"/>
+            <time hour="0" minute="0"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>100</number>
+        <src>PDX</src>
+        <depart>
+            <date day="16" month="9" year="2023"/>
+            <time hour="10" minute="30"/>
+        </depart>
+        <dest>PDX</dest>
+        <arrive>
+            <date day="17" month="9" year="2023"/>
+            <time hour="0" minute="0"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>100</number>
+        <src>PDX</src>
+        <depart>
+            <date day="16" month="9" year="2023"/>
+            <time hour="10" minute="30"/>
+        </depart>
+        <dest>PDX</dest>
+        <arrive>
+            <date day="17" month="9" year="2023"/>
+            <time hour="0" minute="0"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>100</number>
+        <src>PDX</src>
+        <depart>
+            <date day="16" month="9" year="2023"/>
+            <time hour="10" minute="30"/>
+        </depart>
+        <dest>PDX</dest>
+        <arrive>
+            <date day="17" month="9" year="2023"/>
+            <time hour="0" minute="0"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>100</number>
+        <src>PDX</src>
+        <depart>
+            <date day="16" month="9" year="2023"/>
+            <time hour="10" minute="30"/>
+        </depart>
+        <dest>PDX</dest>
+        <arrive>
+            <date day="17" month="9" year="2023"/>
+            <time hour="0" minute="0"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>100</number>
+        <src>PDX</src>
+        <depart>
+            <date day="16" month="9" year="2023"/>
+            <time hour="10" minute="30"/>
+        </depart>
+        <dest>PDX</dest>
+        <arrive>
+            <date day="17" month="9" year="2023"/>
+            <time hour="0" minute="0"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>100</number>
+        <src>PDX</src>
+        <depart>
+            <date day="16" month="9" year="2023"/>
+            <time hour="10" minute="30"/>
+        </depart>
+        <dest>PDX</dest>
+        <arrive>
+            <date day="17" month="9" year="2023"/>
+            <time hour="0" minute="0"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>100</number>
+        <src>PDX</src>
+        <depart>
+            <date day="16" month="9" year="2023"/>
+            <time hour="10" minute="30"/>
+        </depart>
+        <dest>PDX</dest>
+        <arrive>
+            <date day="17" month="9" year="2023"/>
+            <time hour="0" minute="0"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>100</number>
+        <src>PDX</src>
+        <depart>
+            <date day="16" month="9" year="2023"/>
+            <time hour="10" minute="30"/>
+        </depart>
+        <dest>PDX</dest>
+        <arrive>
+            <date day="17" month="9" year="2023"/>
+            <time hour="0" minute="0"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>100</number>
+        <src>PDX</src>
+        <depart>
+            <date day="16" month="9" year="2023"/>
+            <time hour="10" minute="30"/>
+        </depart>
+        <dest>PDX</dest>
+        <arrive>
+            <date day="17" month="9" year="2023"/>
+            <time hour="0" minute="0"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>100</number>
+        <src>PDX</src>
+        <depart>
+            <date day="16" month="9" year="2023"/>
+            <time hour="10" minute="30"/>
+        </depart>
+        <dest>PDX</dest>
+        <arrive>
+            <date day="17" month="9" year="2023"/>
+            <time hour="0" minute="0"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>100</number>
+        <src>PDX</src>
+        <depart>
+            <date day="16" month="9" year="2023"/>
+            <time hour="10" minute="30"/>
+        </depart>
+        <dest>PDX</dest>
+        <arrive>
+            <date day="17" month="9" year="2023"/>
+            <time hour="0" minute="0"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>100</number>
+        <src>PDX</src>
+        <depart>
+            <date day="16" month="9" year="2023"/>
+            <time hour="10" minute="30"/>
+        </depart>
+        <dest>PDX</dest>
+        <arrive>
+            <date day="17" month="9" year="2023"/>
+            <time hour="0" minute="0"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>100</number>
+        <src>PDX</src>
+        <depart>
+            <date day="16" month="9" year="2023"/>
+            <time hour="10" minute="30"/>
+        </depart>
+        <dest>PDX</dest>
+        <arrive>
+            <date day="17" month="9" year="2023"/>
+            <time hour="0" minute="0"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>100</number>
+        <src>PDX</src>
+        <depart>
+            <date day="16" month="9" year="2023"/>
+            <time hour="10" minute="30"/>
+        </depart>
+        <dest>PDX</dest>
+        <arrive>
+            <date day="17" month="9" year="2023"/>
+            <time hour="12" minute="0"/>
+        </arrive>
+    </flight>
+</airline>

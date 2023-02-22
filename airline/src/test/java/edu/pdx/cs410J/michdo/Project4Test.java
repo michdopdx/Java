@@ -12,16 +12,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
- * A unit test for code in the <code>Project3</code> class.  This is different
+ * A unit test for code in the <code>Project4</code> class.  This is different
  * from <code>Project1IT</code> which is an integration test (and can capture data
  * written to {@link System#out} and the like.
  */
-class Project3Test {
+class Project4Test {
 
   @Test
   void readmeCanBeReadAsResource() throws IOException {
     try (
-      InputStream readme = Project3.class.getResourceAsStream("README.txt")
+      InputStream readme = Project4.class.getResourceAsStream("README.txt")
     ) {
       assertThat(readme, not(nullValue()));
       BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
@@ -34,25 +34,25 @@ class Project3Test {
 
   @Test
   void checkInvalidationIfStringIsInt(){
-    boolean value = Project3.checkForInt("200");
+    boolean value = Project4.checkForInt("200");
     assert (value == true);
   }
   @Test
   void checkInvalidationIfStringIsNotInt(){
-    boolean value = Project3.checkForInt("NotInt");
+    boolean value = Project4.checkForInt("NotInt");
     assert (value == false);
   }
 
   @Test
   void checkValidDateAndTime()
   {
-    boolean value = Project3.formatDateAndTime("09/16/2000 10:10 am");
+    boolean value = Project4.formatDateAndTime("09/16/2000 10:10 am");
     assert (value == true);
   }
   @Test
   void checkInValidDate()
   {
-    boolean value = Project3.formatDateAndTime("09/xx/2000 10:10");
+    boolean value = Project4.formatDateAndTime("09/xx/2000 10:10");
     assert (value == false);
   }
 

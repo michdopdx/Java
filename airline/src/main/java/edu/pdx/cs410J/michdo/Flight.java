@@ -12,6 +12,7 @@ import java.lang.Comparable;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.MissingFormatArgumentException;
@@ -41,6 +42,10 @@ public class Flight extends AbstractFlight implements Comparable<Flight>{
   /**
    * A string that consist of date and time of arrival
    */
+
+  private String [] departureDateComponent;
+
+  private String [] arrivalDateComponent;
 
   /**
    * Flight constructor that creates a flight object from given arguments.
@@ -111,6 +116,8 @@ public class Flight extends AbstractFlight implements Comparable<Flight>{
     {
       throw new InvalidParameterException("Arrival time Comes before Departure. Departure time MUST come before Arrival");
     }
+    this.departureDateComponent = parseDateIntoComponents(this.departure);
+    this.arrivalDateComponent = parseDateIntoComponents(this.arrival);
   }
 
   /**
@@ -201,6 +208,20 @@ public class Flight extends AbstractFlight implements Comparable<Flight>{
     }
   }
 
+  public static String[] parseDateIntoComponents(Date date) {
+    String [] dateComponents = new String[5];
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(date);
+
+    dateComponents[0]= String.valueOf(cal.get(Calendar.MONTH) + 1);
+    dateComponents[1]= String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
+    dateComponents[2]= String.valueOf(cal.get(Calendar.YEAR));
+    dateComponents[3] = String.valueOf(cal.get(Calendar.HOUR_OF_DAY));
+    dateComponents[4]= String.valueOf(cal.get(Calendar.MINUTE));
+
+    return dateComponents;
+  }
+
   /**
    * Getter which gets the flight number of a flight.
    * @return Flight number.
@@ -275,6 +296,13 @@ public class Flight extends AbstractFlight implements Comparable<Flight>{
     long min = second/60;
 
     return Long.toString(min);
+  }
+
+  public String [] getDepartureDateComponent() {
+    return this.departureDateComponent;
+  }
+  public String [] getArrivalDateComponent() {
+    return this.arrivalDateComponent;
   }
 
   /**

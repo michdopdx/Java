@@ -1,6 +1,8 @@
 package edu.pdx.cs410J.michdo;
 
 import edu.pdx.cs410J.ParserException;
+import org.w3c.dom.Document;
+
 import java.io.*;
 import java.security.InvalidParameterException;
 import java.text.DateFormat;
@@ -11,7 +13,7 @@ import java.util.*;
 /**
  * The main class for the CS410J airline Project
  */
-public class Project3 {
+public class Project4 {
   /**
    * Checks if the format of date is in pattern MM/dd/yyyy hh:mm a.
    * @param dateTime The date which is being checked for formatting.
@@ -44,6 +46,7 @@ public class Project3 {
     }
   }
 
+
   /**
    * The main driver for Airline Application
    * @param args Command Line Arguments.
@@ -60,9 +63,11 @@ public class Project3 {
     String arrival = "";
     String file = null;
     String prettyFile = null;
+    String xmlFile = null;
     boolean hasFile = false;
     boolean hasPretty = false;
     boolean hasPrintPretty = false;
+    boolean hasXml = false;
     Airline airlineFromFile = null;
 
 
@@ -89,114 +94,117 @@ public class Project3 {
       return;
     }
 
-      for (int i = 0; i < args.length; i++) {
-        if (args[i].contains("-") || args[i].contains(".txt")) {
-          if (args[i].contains("-README") || args[i].contains("-print") || args[i].contains("-textFile") || (args[i].contains("-pretty")) || args[i].contains(".txt") || args[i].equals("-")) {
-            if (args[i].contains("-README")) {
-              try {
-                InputStream readme = Project3.class.getResourceAsStream("README.txt");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                  System.out.println(line);
-                }
-                return;
-              } catch (IOException e) {
-                System.err.println("README Not Found");
-                return;
+    for (int i = 0; i < args.length; i++) {
+      if (args[i].contains("-") || args[i].contains(".txt") || args[i].contains(".xml")) {
+        if (args[i].contains("-README") || args[i].contains("-print") || args[i].contains("-textFile") || (args[i].contains("-pretty")) || args[i].equals("-xmlFile") ||
+                args[i].contains(".txt") || args[i].contains(".xml") || args[i].equals("-")) {
+          if (args[i].contains("-README")) {
+            try {
+              InputStream readme = Project4.class.getResourceAsStream("README.txt");
+              BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
+              String line;
+              while ((line = reader.readLine()) != null) {
+                System.out.println(line);
               }
+              return;
+            } catch (IOException e) {
+              System.err.println("README Not Found");
+              return;
             }
-
-            else if (args[i].contains("-print")) {
-              options++;
+          } else if (args[i].contains("-print")) {
+            options++;
+          } else if (args[i].contains(".txt")) {
+            options++;
+          } else if (args[i].contains(".xml")) {
+            options++;
+          } else if (args[i].equals("-")) {
+            options++;
+          } else if (args[i].contains("-textFile")) {
+            if (!args[i + 1].contains(".txt") && !args[i + 1].contains("-")) {
+              file = args[i + 1] + ".txt";
+              args[i + 1] = file;
+            } else if (args[i + 1].contains("-")) {
+              System.err.println("Missing TextFile for -textFile");
+              return;
+            } else {
+              file = args[i + 1];
             }
-
-            else if (args[i].contains(".txt")) {
-              options++;
+            options++;
+          } else if (args[i].contains("-pretty")) {
+            if (!args[i + 1].contains(".txt") && !args[i + 1].equals("-")) {
+              prettyFile = args[i + 1] + ".txt";
+              args[i + 1] = prettyFile;
+            } else {
+              prettyFile = args[i + 1];
             }
-
-            else if (args[i].equals("-")) {
-              options++;
+            options++;
+          } else if (args[i].contains("-xmlFile")) {
+            if (!args[i + 1].contains(".xml") && !args[i + 1].contains("-")) {
+              xmlFile = args[i + 1] + ".xml";
+              args[i + 1] = xmlFile;
+            } else {
+              xmlFile = args[i + 1];
             }
-            else if (args[i].contains("-textFile")) {
-              if (!args[i + 1].contains(".txt") && !args[i + 1].contains("-")) {
-                file = args[i + 1] + ".txt";
-                args[i + 1] = file;
-              } else if (args[i + 1].contains("-")) {
-                System.err.println("Missing TextFile for -textFile");
-                return;
-              } else {
-                file = args[i + 1];
-              }
-              options++;
-            }
-
-            else if (args[i].contains("-pretty")) {
-              if (!args[i + 1].contains(".txt") && !args[i + 1].equals("-")) {
-                prettyFile = args[i + 1] + ".txt";
-                args[i + 1] = prettyFile;
-              }
-              else {
-                prettyFile = args[i + 1];
-              }
-              options++;
-            }
+            options++;
           }
         }
       }
+    }
 
-
-      String[] option = Arrays.copyOfRange(args, 0, options);
-      String[] arguments = Arrays.copyOfRange(args, options, args.length);
+    String[] option = Arrays.copyOfRange(args, 0, options);
+    String[] arguments = Arrays.copyOfRange(args, options, args.length);
 
     if (args.length - options > 10) {
-        System.err.println("The Number Of Arguments Has Exceeded The Limits");
-        return;
-      }
-      if (arguments.length < 10) {
-        System.err.println("Missing Command Line Argument");
-        return;
-      }
-
-      for (String op : option) {
-        if (op.equals("-print") || op.equals("-README") || op.equals("-textFile")  || op.equals("-pretty")|| op.contains(".txt") || op.equals("-") ||op.equals(prettyFile)) {
-          if (op.equals("-print")) {
-            hasPrint = true;
-          }
-          if (op.equals("-textFile")) {
-            hasFile = true;
-          }
-          if (op.equals("-pretty")) {
-            hasPretty = true;
-          }
-          if(op.equals("-")) {
-            hasPrintPretty = true;
-          }
-        }
-        else {
-          System.err.println(op + " option does not exist");
-          return;
-        }
-      }
-      name = arguments[0];
-
-    String date = arguments[3] + " " + arguments[4] + " " + arguments[5];
-    if(formatDateAndTime(date)) {
-      depart = date;
+      System.err.println("The Number Of Arguments Has Exceeded The Limits");
+      return;
     }
-    else {
-        System.err.println("Invalid Departure. Departure entered was, " + arguments[3] + " " + arguments[4] +  " " + arguments[5] + " Expected Format mm/dd/yy hh:mm am/pm");
-        return;
-    }
-    date = arguments[7] + " " + arguments[8]+ " " + arguments[9];
-    if(formatDateAndTime(date)){
-        arrival = date;
-    }
-    else {
-      System.err.println("Invalid Arrival. Arrival entered was, " + arguments[7] + " " + arguments[8] + " " + arguments[9] + " Expected Format mm/dd/yy hh:mm am/pm");
+    if (arguments.length < 10) {
+      System.err.println("Missing Command Line Argument");
       return;
     }
 
+    for (String op : option) {
+      if (op.equals("-print") || op.equals("-README") || op.equals("-textFile") || op.equals("-pretty") || op.equals("-xmlFile") || op.contains(".txt") || op.equals("-") || op.contains(".xml") || op.equals(prettyFile)) {
+        if (hasFile && hasXml) {
+          System.err.println("Can not have both xml file and text file in the same command line");
+          return;
+        }
+        if (op.equals("-print")) {
+          hasPrint = true;
+        }
+        if (op.equals("-textFile")) {
+          hasFile = true;
+        }
+        if (op.equals("-pretty")) {
+          hasPretty = true;
+        }
+        if (op.equals("-")) {
+          hasPrintPretty = true;
+        }
+        if (op.equals("-xmlFile")) {
+          hasXml = true;
+        }
+      } else {
+        System.err.println(op + " option does not exist");
+        return;
+      }
+    }
+    name = arguments[0];
+
+    String date = arguments[3] + " " + arguments[4] + " " + arguments[5];
+    if (formatDateAndTime(date)) {
+      depart = date;
+    } else {
+      System.err.println("Invalid Departure. Departure entered was, " + arguments[3] + " " + arguments[4] + " " + arguments[5] + " Expected Format mm/dd/yy hh:mm am/pm");
+      return;
+    }
+    date = arguments[7] + " " + arguments[8] + " " + arguments[9];
+    if (formatDateAndTime(date)) {
+      arrival = date;
+    } else {
+      System.err.println("Invalid Arrival. Arrival entered was, " + arguments[7] + " " + arguments[8] + " " + arguments[9] + " Expected Format mm/dd/yy hh:mm am/pm");
+      return;
+    }
 
     Airline airline;
     Flight flight;
@@ -215,16 +223,15 @@ public class Project3 {
       return;
     }
 
-    if(hasFile) {
+    if (hasFile) {
       File airlineFile = new File(file);
       try {
-        if(airlineFile.getParentFile() != null) {
+        if (airlineFile.getParentFile() != null) {
           airlineFile.getParentFile().mkdirs();
           airlineFile.createNewFile();
-        }
-        else
+        } else
           airlineFile.createNewFile();
-      }catch (IOException e) {
+      } catch (IOException e) {
         System.err.println("Input error when creating " + file);
         return;
       }
@@ -277,24 +284,20 @@ public class Project3 {
       }
     }
 
-    if(hasPretty) {
-      if(hasPrintPretty) {
+    if (hasPretty) {
+      if (hasPrintPretty) {
         PrintWriter writer = new PrintWriter(System.out);
         PrettyPrinter pretty = new PrettyPrinter(writer);
-        if(hasFile) {
+        if (hasFile) {
           pretty.dump(airlineFromFile);
-        }
-        else {
+        } else {
           pretty.dump(airline);
         }
-      }
-
-      else if(prettyFile != null) {
+      } else if (prettyFile != null) {
         Airline prettyChoice;
-        if(hasFile) {
+        if (hasFile) {
           prettyChoice = airlineFromFile;
-        }
-        else
+        } else
           prettyChoice = airline;
 
         try {
@@ -304,6 +307,65 @@ public class Project3 {
           printPretty.dump(prettyChoice);
         } catch (IOException e) {
           System.err.println("No able to write to " + prettyFile);
+          return;
+        }
+      }
+    }
+
+    if (hasXml) {
+      Document workingDoc;
+
+      File xml = new File(xmlFile);
+      try {
+        if (xml.getParentFile() != null) {
+          xml.getParentFile().mkdirs();
+          xml.createNewFile();
+        } else
+          xml.createNewFile();
+      } catch (IOException e) {
+        System.err.println("Input error when creating " + file);
+        return;
+      }
+      if (xml != null) {
+
+        try {
+          FileReader rf = new FileReader(xml);
+          if(rf.read() == -1)
+          {
+            System.out.println("here to dump in empty xml");
+            XmlDumper dumper = new XmlDumper(xml);
+            dumper.dump(airline);
+          }
+
+          else {
+            XmlParser parseCheck = new XmlParser(xml);
+            int value = parseCheck.checkXmlAirline(airline.getName());
+            if (value == 1) {
+              XmlParser parseXml = new XmlParser(xml);
+              Airline airlineFromXml = parseXml.parse();
+              airlineFromXml.addFlight(flight);
+              airlineFromXml.sortFlights();
+              XmlDumper dumpParsedAirline = new XmlDumper(xml);
+              dumpParsedAirline.dump(airlineFromXml);
+            }
+          }
+        } catch (InvalidParameterException e) {
+          System.err.println(e.getMessage());
+          return;
+        }
+        catch (NullPointerException e) {
+          System.err.println(e.getMessage());
+          return;
+        } catch (IOException e) {
+          System.err.println("Unable to write airline to XML");
+          return;
+        } catch (ParserException e) {
+          System.err.println(e.getMessage());
+          return;
+        }catch (RuntimeException e) {
+          String message = e.toString();
+          String [] splitMessage = message.split(";");
+          System.err.println("ERROR Missing content from XML:" + splitMessage[4]);
           return;
         }
       }

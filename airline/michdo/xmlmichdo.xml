@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE airline SYSTEM "http://www.cs.pdx.edu/~whitlock/dtds/airline.dtd">
+<airline>
+    <name>Project3</name>
+    <flight>
+        <number>400</number>
+        <src>EVV</src>
+        <depart>
+            <date day="4" month="3" year="2023"/>
+            <time hour="12" minute="36"/>
+        </depart>
+        <dest>LFT</dest>
+        <arrive>
+            <date day="5" month="3" year="2023"/>
+            <time hour="20" minute="19"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>400</number>
+        <src>EVV</src>
+        <depart>
+            <date day="4" month="3" year="2023"/>
+            <time hour="12" minute="36"/>
+        </depart>
+        <dest>LFT</dest>
+        <arrive>
+            <date day="5" month="3" year="2023"/>
+            <time hour="20" minute="19"/>
+        </arrive>
+    </flight>
+</airline>
