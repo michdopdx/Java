@@ -21,19 +21,33 @@ import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+/**
+ * Creates a parser object which allows for parsing a xml file.
+ * @author Michael Do
+ */
 public class XmlParser implements AirlineParser<Airline> {
 
 
+		/**
+		 * File field used to define a file to read from.
+		 */
 		private final File file;
 
-
+		/**
+		 * Constructor to create a XmlParser object.
+		 * @param file Specified file where to read from.
+		 */
 		public XmlParser (File file) {
 				this.file = file;
 		}
 
 
-
-
+		/**
+		 * Will scan a given XML file for a given name
+		 * @param name Is the name to scan for.
+		 * @return 1 if the name is found, else 0
+		 * @throws IOException When the file is access.
+		 */
 		public  int checkXmlAirline(String name) throws IOException {
 				Document doc;
 				try{
@@ -61,6 +75,13 @@ public class XmlParser implements AirlineParser<Airline> {
 				}
 				return 0;
 		}
+
+		/**
+		 * Used to format the date and time from the date and time attributes from xml
+		 * @param list lit of depart or arrives
+		 * @return A String formatted date.
+		 * @throws ParseException When not able to parse the elements
+		 */
 		public String formatXmlDate(NodeList list) throws ParseException {
 				String date = null;
 				String time = null;
@@ -104,7 +125,11 @@ public class XmlParser implements AirlineParser<Airline> {
 				return correctDate;
 		}
 
-
+		/**
+		 * Used to parse a given xml file containing airline and flights, and create a new airline
+		 * @return The airline from xml file
+		 * @throws ParserException When Not able to parse an element.
+		 */
 		@Override
 		public Airline parse() throws ParserException {
 

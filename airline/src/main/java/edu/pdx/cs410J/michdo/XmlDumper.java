@@ -18,14 +18,32 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 
+/**
+ * Creates a dumper object which allows for writing to a xml file.
+ * @author Michael Do
+ */
 public class XmlDumper implements AirlineDumper<Airline> {
 
+		/**
+		 * File field used to define a file to dump to.
+		 */
 		private final File file;
 
+
+		/**
+		 * Constructor to create a XmlDumper object.
+		 * @param file Specified file where to dump.
+		 */
 		public XmlDumper (File file) {
 				this.file = file;
 		}
 
+		/**
+		 * Will write a given airline and all of its flights into a xml file according to DTD
+		 * @param airline Airline which contains flights that will be dumped.
+		 * @throws RuntimeException When an error occurs while dumping
+		 *
+		 */
 		@Override
 		public void dump(Airline airline){
 
