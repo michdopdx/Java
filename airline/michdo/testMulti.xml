@@ -25,6 +25,58 @@
         <dest>PDX</dest>
         <arrive>
             <date day="17" month="9" year="2023"/>
+            <time hour="0" minute="0"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>100</number>
+        <src>PDX</src>
+        <depart>
+            <date day="16" month="9" year="2023"/>
+            <time hour="10" minute="30"/>
+        </depart>
+        <dest>PDX</dest>
+        <arrive>
+            <date day="17" month="9" year="2023"/>
+            <time hour="0" minute="0"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>100</number>
+        <src>PDX</src>
+        <depart>
+            <date day="16" month="9" year="2023"/>
+            <time hour="10" minute="30"/>
+        </depart>
+        <dest>PDX</dest>
+        <arrive>
+            <date day="17" month="9" year="2023"/>
+            <time hour="0" minute="0"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>100</number>
+        <src>PDX</src>
+        <depart>
+            <date day="16" month="9" year="2023"/>
+            <time hour="10" minute="30"/>
+        </depart>
+        <dest>PDX</dest>
+        <arrive>
+            <date day="17" month="9" year="2023"/>
+            <time hour="0" minute="0"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>100</number>
+        <src>PDX</src>
+        <depart>
+            <date day="16" month="9" year="2023"/>
+            <time hour="10" minute="30"/>
+        </depart>
+        <dest>PDX</dest>
+        <arrive>
+            <date day="17" month="9" year="2023"/>
             <time hour="12" minute="0"/>
         </arrive>
     </flight>

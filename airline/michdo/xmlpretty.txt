@@ -1,0 +1,18 @@
+Valid Airlines: Flight 1437 One Way Trip from Leon, Mexico To Casablanca, Morocco Flight Is Scheduled To Depart From Leon, Mexico Airport 
+On Friday, September 25, 2020, 5:00 PM, And Arriving At Casablanca, Morocco Airport at Saturday, September 26, 2020, 3:56 AM. The Duration Of The Flight is 656 Minutes 
+
+Valid Airlines: Flight 7865 One Way Trip from Johannesburg, South Africa To Xian Xianyang, China Flight Is Scheduled To Depart From Johannesburg, South Africa Airport 
+On Friday, May 15, 2020, 7:24 AM, And Arriving At Xian Xianyang, China Airport at Saturday, May 16, 2020, 9:07 AM. The Duration Of The Flight is 1543 Minutes 
+
+Valid Airlines: Flight 400 One Way Trip from Portland, OR To Mcallen, TX Flight Is Scheduled To Depart From Portland, OR Airport 
+On Tuesday, January 10, 2023, 11:00 AM, And Arriving At Mcallen, TX Airport at Friday, February 10, 2023, 11:00 PM. The Duration Of The Flight is 45360 Minutes 
+
+Valid Airlines: Flight 400 One Way Trip from Portland, OR To Mcallen, TX Flight Is Scheduled To Depart From Portland, OR Airport 
+On Tuesday, January 10, 2023, 11:00 AM, And Arriving At Mcallen, TX Airport at Friday, February 10, 2023, 11:00 PM. The Duration Of The Flight is 45360 Minutes 
+
+Valid Airlines: Flight 400 One Way Trip from Portland, OR To Mcallen, TX Flight Is Scheduled To Depart From Portland, OR Airport 
+On Tuesday, January 10, 2023, 11:00 AM, And Arriving At Mcallen, TX Airport at Friday, February 10, 2023, 11:00 PM. The Duration Of The Flight is 45360 Minutes 
+
+Valid Airlines: Flight 400 One Way Trip from Portland, OR To Mcallen, TX Flight Is Scheduled To Depart From Portland, OR Airport 
+On Tuesday, January 10, 2023, 11:00 AM, And Arriving At Mcallen, TX Airport at Friday, February 10, 2023, 11:00 PM. The Duration Of The Flight is 45360 Minutes 
+

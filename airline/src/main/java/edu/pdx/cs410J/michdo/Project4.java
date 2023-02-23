@@ -284,7 +284,7 @@ public class Project4 {
       }
     }
 
-    if (hasPretty) {
+    if (hasPretty && !hasXml) {
       if (hasPrintPretty) {
         PrintWriter writer = new PrintWriter(System.out);
         PrettyPrinter pretty = new PrettyPrinter(writer);
@@ -337,7 +337,7 @@ public class Project4 {
             dumper.dump(airline);
           }
 
-          else{
+          else {
             XmlParser parseCheck = new XmlParser(xml);
             int value = parseCheck.checkXmlAirline(airline.getName());
             if (value == 1) {
@@ -347,12 +347,40 @@ public class Project4 {
               airlineFromXml.sortFlights();
               XmlDumper dumpParsedAirline = new XmlDumper(xml);
               dumpParsedAirline.dump(airlineFromXml);
+
+              if (hasPretty) {
+                if (hasPrintPretty) {
+                  PrintWriter writer = new PrintWriter(System.out);
+                  PrettyPrinter pretty = new PrettyPrinter(writer);
+                  if (hasXml) {
+                    pretty.dump(airlineFromXml);
+                  } else {
+                    pretty.dump(airline);
+                  }
+                } else if (prettyFile != null) {
+                  Airline prettyChoice;
+                  if (hasXml) {
+                    prettyChoice = airlineFromXml;
+                  } else
+                    prettyChoice = airline;
+                  try {
+                    File pretty = new File(prettyFile);
+                    FileWriter fw = new FileWriter(pretty);
+                    PrettyPrinter printPretty = new PrettyPrinter(fw);
+                    printPretty.dump(prettyChoice);
+                  } catch (IOException e) {
+
+                  }
+                }
+              }
             }
-            if(value == 0) {
+
+            if (value == 0) {
               System.err.println(airline.getName() + " Airlines Does not exist in " + xml);
               return;
             }
           }
+
         } catch (InvalidParameterException e) {
           System.err.println(e.getMessage());
           return;
