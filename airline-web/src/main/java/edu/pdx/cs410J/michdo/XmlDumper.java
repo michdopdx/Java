@@ -13,6 +13,7 @@ import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.io.Writer;
 import java.util.Collection;
 
 /**
@@ -24,15 +25,15 @@ public class XmlDumper implements AirlineDumper<Airline> {
 		/**
 		 * File field used to define a file to dump to.
 		 */
-		private final File file;
+		private final Writer write;
 
 
 		/**
 		 * Constructor to create a XmlDumper object.
 		 * @param file Specified file where to dump.
 		 */
-		public XmlDumper(File file) {
-				this.file = file;
+		public XmlDumper(Writer writer) {
+				this.write = writer;
 		}
 
 		/**
@@ -114,7 +115,7 @@ public class XmlDumper implements AirlineDumper<Airline> {
 						xmlTrans.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "http://www.cs.pdx.edu/~whitlock/dtds/airline.dtd");
 
 						DOMSource docSource = new DOMSource(workingDoc);
-						StreamResult xmlResult = new StreamResult(this.file);
+						StreamResult xmlResult = new StreamResult(this.write);
 						xmlTrans.setOutputProperty(OutputKeys.INDENT, "yes");
 
 						xmlTrans.transform(docSource,xmlResult);
