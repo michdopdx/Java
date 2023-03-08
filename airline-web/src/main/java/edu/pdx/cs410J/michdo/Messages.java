@@ -6,18 +6,15 @@ package edu.pdx.cs410J.michdo;
  */
 public class Messages
 {
+
+    /**
+     * Used to print missing parameter
+     * @param parameterName name of the parameter
+     * @return A string declaring that the parameter is missing
+     */
     public static String missingRequiredParameter( String parameterName )
     {
         return String.format("The required parameter \"%s\" is missing", parameterName);
-    }
-
-    public static String definedWordAs(String word, String definition )
-    {
-        return String.format( "Defined %s as %s", word, definition );
-    }
-
-    public static String allDictionaryEntriesDeleted() {
-        return "All dictionary entries have been deleted";
     }
 
 }

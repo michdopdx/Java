@@ -6,6 +6,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -13,6 +14,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
 import java.security.InvalidParameterException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,50 +30,16 @@ public class XmlParser implements AirlineParser<Airline> {
 		/**
 		 * File field used to define a file to read from.
 		 */
-		private final File file;
+		private final String xmlStr;
 
 		/**
 		 * Constructor to create a XmlParser object.
-		 * @param file Specified file where to read from.
+		 * @param xml Specified file where to read from.
 		 */
-		public XmlParser(File file) {
-				this.file = file;
+		public XmlParser(String xml) {
+				this.xmlStr = xml;
 		}
 
-
-		/**
-		 * Will scan a given XML file for a given name
-		 * @param name Is the name to scan for.
-		 * @return 1 if the name is found, else 0
-		 * @throws IOException When the file is access.
-		 */
-		public  int checkXmlAirline(String name) throws IOException {
-				Document doc;
-				try{
-						AirlineXmlHelper helper = new AirlineXmlHelper();
-						DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-						factory.setValidating(true);
-						DocumentBuilder builder = factory.newDocumentBuilder();
-						builder.setErrorHandler(helper);
-						builder.setEntityResolver(helper);
-						doc = builder.parse(this.file);
-
-						doc.getDocumentElement().getNodeName();
-						String airlineName = doc.getElementsByTagName("name").item(0).getTextContent();
-						if(name.equals(airlineName))
-						{
-								return 1;
-						}
-
-				} catch (ParserConfigurationException e) {
-						throw new RuntimeException(e);
-				} catch (IOException e) {
-						throw new IOException("File " + this.file + " does not exist");
-				} catch (SAXException e) {
-						throw new RuntimeException(e);
-				}
-				return 0;
-		}
 
 		/**
 		 * Used to format the date and time from the date and time attributes from xml
@@ -146,7 +114,7 @@ public class XmlParser implements AirlineParser<Airline> {
 						DocumentBuilder builder = factory.newDocumentBuilder();
 						builder.setErrorHandler(helper);
 						builder.setEntityResolver(helper);
-						doc = builder.parse(this.file);
+						doc = builder.parse(new InputSource(new StringReader(this.xmlStr)));
 
 				} catch (ParserConfigurationException | IOException e) {
 						throw new RuntimeException(e);
@@ -197,4 +165,5 @@ public class XmlParser implements AirlineParser<Airline> {
 				}
 				return airline;
 		}
+
 }

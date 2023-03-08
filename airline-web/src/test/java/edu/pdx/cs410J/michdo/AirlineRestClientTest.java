@@ -21,19 +21,26 @@ public class AirlineRestClientTest {
 
   @Test
   void getAllDictionaryEntriesPerformsHttpGetWithNoParameters() throws ParserException, IOException {
-    Map<String, String> dictionary = Map.of("One", "1", "Two", "2");
 
+    String airlineName = "validAirline";
+    Airline testAirline = new Airline(airlineName);
+    testAirline.addFlight(new Flight("1","PDX","08/10/2022 10:00 am", "PDX","8/11/2022 12:00 pm"));
     HttpRequestHelper http = mock(HttpRequestHelper.class);
-    when(http.get(eq(Map.of()))).thenReturn(dictionaryAsText(dictionary));
-    
+    when(http.get(eq(Map.of(AirlineServlet.AIRLINE_NAME_PARAMETER,airlineName)))).thenReturn(airlineAsText(testAirline));
     AirlineRestClient client = new AirlineRestClient(http);
+    Airline airlineFromClient = client.getAirline(airlineName);
+    assertThat(airlineFromClient.getName(), equalTo(airlineName));
+    assertThat(airlineFromClient.getFlights().iterator().next().getSource(),equalTo("PDX"));
 
-    assertThat(client.getAllDictionaryEntries(), equalTo(dictionary));
+
   }
 
-  private HttpRequestHelper.Response dictionaryAsText(Map<String, String> dictionary) {
+  private HttpRequestHelper.Response airlineAsText(Airline airline) {
     StringWriter writer = new StringWriter();
-    new TextDumper(writer).dump(dictionary);
+
+    //maybe here we xml dump??
+    XmlDumper dumper = new XmlDumper(writer);
+    dumper.dump(airline);
 
     return new HttpRequestHelper.Response(writer.toString());
   }

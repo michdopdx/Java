@@ -1,5 +1,6 @@
 package edu.pdx.cs410J.michdo;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -78,9 +79,144 @@ class AirlineServletTest {
     Flight flight = airline.getFlights().iterator().next();
     assertThat(flight.getNumber(),equalTo(Integer.parseInt(flightNumber)));
     assertThat(statusCode.getValue(), equalTo(HttpServletResponse.SC_OK));
-
-
-
   }
 
+  String airlineName = "Airline";
+  String flightNumber = "11";
+  String flightSrc = "PDX";
+  String flightDepart = "09/16/2000 10:00 am";
+  String flightDest = "PDX";
+  String flightArrive = "09/17/2000 10:00 pm";
+  @Test
+  void testMissingAirlineName() throws IOException {
+    AirlineServlet servlet = new AirlineServlet();
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getParameter(AirlineServlet.AIRLINE_NAME_PARAMETER)).thenReturn(null);
+    HttpServletResponse response = mock(HttpServletResponse.class);
+    StringWriter stringWriter = new StringWriter();
+    PrintWriter pw = new PrintWriter(stringWriter, true);
+    when(response.getWriter()).thenReturn(pw);
+    servlet.doPost(request, response);
+    verify(response).sendError(412,"The required parameter \"airline\" is missing");
+  }
+  @Test
+  void testMissingFlightNumber() throws IOException {
+    AirlineServlet servlet = new AirlineServlet();
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getParameter(AirlineServlet.AIRLINE_NAME_PARAMETER)).thenReturn(airlineName);
+    when(request.getParameter(AirlineServlet.FLIGHT_NUMBER_PARAMETER)).thenReturn(null);
+    HttpServletResponse response = mock(HttpServletResponse.class);
+    StringWriter stringWriter = new StringWriter();
+    PrintWriter pw = new PrintWriter(stringWriter, true);
+    when(response.getWriter()).thenReturn(pw);
+    servlet.doPost(request, response);
+    verify(response).sendError(412,"The required parameter \"flightNumber\" is missing");
+  }
+
+  @Test
+  void testMissingFlightSrc() throws IOException {
+    AirlineServlet servlet = new AirlineServlet();
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getParameter(AirlineServlet.AIRLINE_NAME_PARAMETER)).thenReturn(airlineName);
+    when(request.getParameter(AirlineServlet.FLIGHT_NUMBER_PARAMETER)).thenReturn(flightNumber);
+    when(request.getParameter(AirlineServlet.FLIGHT_SRC_PARAMETER)).thenReturn(null);
+    HttpServletResponse response = mock(HttpServletResponse.class);
+    StringWriter stringWriter = new StringWriter();
+    PrintWriter pw = new PrintWriter(stringWriter, true);
+    when(response.getWriter()).thenReturn(pw);
+    servlet.doPost(request, response);
+    verify(response).sendError(412,"The required parameter \"src\" is missing");
+  }
+
+  @Test
+  void testMissingFlightDepart() throws IOException {
+    AirlineServlet servlet = new AirlineServlet();
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getParameter(AirlineServlet.AIRLINE_NAME_PARAMETER)).thenReturn(airlineName);
+    when(request.getParameter(AirlineServlet.FLIGHT_NUMBER_PARAMETER)).thenReturn(flightNumber);
+    when(request.getParameter(AirlineServlet.FLIGHT_SRC_PARAMETER)).thenReturn(flightSrc);
+    when(request.getParameter(AirlineServlet.FLIGHT_DEPART_PARAMETER)).thenReturn(null);
+    HttpServletResponse response = mock(HttpServletResponse.class);
+    StringWriter stringWriter = new StringWriter();
+    PrintWriter pw = new PrintWriter(stringWriter, true);
+    when(response.getWriter()).thenReturn(pw);
+    servlet.doPost(request, response);
+    verify(response).sendError(412,"The required parameter \"depart\" is missing");
+  }
+  @Test
+  void testMissingFlightDest() throws IOException {
+    AirlineServlet servlet = new AirlineServlet();
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getParameter(AirlineServlet.AIRLINE_NAME_PARAMETER)).thenReturn(airlineName);
+    when(request.getParameter(AirlineServlet.FLIGHT_NUMBER_PARAMETER)).thenReturn(flightNumber);
+    when(request.getParameter(AirlineServlet.FLIGHT_SRC_PARAMETER)).thenReturn(flightSrc);
+    when(request.getParameter(AirlineServlet.FLIGHT_DEPART_PARAMETER)).thenReturn(flightDepart);
+    when(request.getParameter(AirlineServlet.FLIGHT_DEST_PARAMETER)).thenReturn(null);
+    HttpServletResponse response = mock(HttpServletResponse.class);
+    StringWriter stringWriter = new StringWriter();
+    PrintWriter pw = new PrintWriter(stringWriter, true);
+    when(response.getWriter()).thenReturn(pw);
+    servlet.doPost(request, response);
+    verify(response).sendError(412,"The required parameter \"dest\" is missing");
+  }
+  @Test
+  void testMissingFlightArrival() throws IOException {
+    AirlineServlet servlet = new AirlineServlet();
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getParameter(AirlineServlet.AIRLINE_NAME_PARAMETER)).thenReturn(airlineName);
+    when(request.getParameter(AirlineServlet.FLIGHT_NUMBER_PARAMETER)).thenReturn(flightNumber);
+    when(request.getParameter(AirlineServlet.FLIGHT_SRC_PARAMETER)).thenReturn(flightSrc);
+    when(request.getParameter(AirlineServlet.FLIGHT_DEPART_PARAMETER)).thenReturn(flightDepart);
+    when(request.getParameter(AirlineServlet.FLIGHT_DEST_PARAMETER)).thenReturn(flightDest);
+    when(request.getParameter(AirlineServlet.FLIGHT_ARRIVE_PARAMETER)).thenReturn(null);
+    HttpServletResponse response = mock(HttpServletResponse.class);
+    StringWriter stringWriter = new StringWriter();
+    PrintWriter pw = new PrintWriter(stringWriter, true);
+    when(response.getWriter()).thenReturn(pw);
+    servlet.doPost(request, response);
+    verify(response).sendError(412,"The required parameter \"arrive\" is missing");
+  }
+
+  @Test
+  void TestDoGetByName() throws IOException {
+    AirlineServlet servlet = new AirlineServlet();
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getParameter(AirlineServlet.AIRLINE_NAME_PARAMETER)).thenReturn(airlineName);
+    when(request.getParameter(AirlineServlet.FLIGHT_NUMBER_PARAMETER)).thenReturn(flightNumber);
+    when(request.getParameter(AirlineServlet.FLIGHT_SRC_PARAMETER)).thenReturn(flightSrc);
+    when(request.getParameter(AirlineServlet.FLIGHT_DEPART_PARAMETER)).thenReturn(flightDepart);
+    when(request.getParameter(AirlineServlet.FLIGHT_DEST_PARAMETER)).thenReturn(flightDest);
+    when(request.getParameter(AirlineServlet.FLIGHT_ARRIVE_PARAMETER)).thenReturn(flightArrive);
+    HttpServletResponse response = mock(HttpServletResponse.class);
+    StringWriter stringWriter = new StringWriter();
+    PrintWriter pw = new PrintWriter(stringWriter, true);
+    when(response.getWriter()).thenReturn(pw);
+    servlet.doPost(request, response);
+
+    servlet.doGet(request,response);
+    String xml = stringWriter.toString();
+    assertThat(xml, containsString(airlineName));
+  }
+
+  @Test
+  void TestDoGetNoName() throws IOException {
+    AirlineServlet servlet = new AirlineServlet();
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getParameter(AirlineServlet.AIRLINE_NAME_PARAMETER)).thenReturn(airlineName);
+    when(request.getParameter(AirlineServlet.FLIGHT_NUMBER_PARAMETER)).thenReturn(flightNumber);
+    when(request.getParameter(AirlineServlet.FLIGHT_SRC_PARAMETER)).thenReturn(flightSrc);
+    when(request.getParameter(AirlineServlet.FLIGHT_DEPART_PARAMETER)).thenReturn(flightDepart);
+    when(request.getParameter(AirlineServlet.FLIGHT_DEST_PARAMETER)).thenReturn(flightDest);
+    when(request.getParameter(AirlineServlet.FLIGHT_ARRIVE_PARAMETER)).thenReturn(flightArrive);
+    HttpServletResponse response = mock(HttpServletResponse.class);
+    StringWriter stringWriter = new StringWriter();
+    PrintWriter pw = new PrintWriter(stringWriter, true);
+    when(response.getWriter()).thenReturn(pw);
+    servlet.doPost(request, response);
+
+    when(request.getParameter(AirlineServlet.AIRLINE_NAME_PARAMETER)).thenReturn(null);
+    servlet.doGet(request,response);
+    String xml = stringWriter.toString();
+    assertThat(xml, containsString(airlineName));
+  }
 }

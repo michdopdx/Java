@@ -43,9 +43,16 @@ public class Flight extends AbstractFlight implements Comparable<Flight>{
    * A string that consist of date and time of arrival
    */
 
+
   private String [] departureDateComponent;
+  /**
+   * Array of departure data and time components
+   */
 
   private String [] arrivalDateComponent;
+  /**
+   * Array of arrival data and time components
+   */
 
   /**
    * Flight constructor that creates a flight object from given arguments.
@@ -151,8 +158,9 @@ public class Flight extends AbstractFlight implements Comparable<Flight>{
 
   /**
    * Checks if an object is null.
-   * <p>
+   *
    * @param obj Object that needs to be checked.
+   * @param type flight parameter
    * @throws NullPointerException If the object is null.
    */
   public static void checkNullValue(Object obj,String type) {
@@ -208,6 +216,11 @@ public class Flight extends AbstractFlight implements Comparable<Flight>{
     }
   }
 
+  /**
+   * Parses the date and time into its components
+   * @param date Given date
+   * @return And array of date time components [0] = month, [1] = day, [2] = year, [3] = hour, [4] = minuets
+   */
   public static String[] parseDateIntoComponents(Date date) {
     String [] dateComponents = new String[5];
     Calendar cal = Calendar.getInstance();
@@ -298,9 +311,18 @@ public class Flight extends AbstractFlight implements Comparable<Flight>{
     return Long.toString(min);
   }
 
+  /**
+   * Returns the components of data and time of departure
+   * @return components of data and time of departure
+   */
   public String [] getDepartureDateComponent() {
     return this.departureDateComponent;
   }
+
+  /**
+   * Returns the components of data and time of arrival
+   * @return components of data and time of arrival
+   */
   public String [] getArrivalDateComponent() {
     return this.arrivalDateComponent;
   }

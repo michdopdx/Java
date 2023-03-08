@@ -17,6 +17,9 @@ public class AirlineXmlHelper extends ProjectXmlHelper {
     "-//Portland State University//DTD CS410J Airline//EN";
 
 
+  /**
+   * Helper for dtd, system id and public id
+   */
   public AirlineXmlHelper() {
     super(PUBLIC_ID, SYSTEM_ID, "airline.dtd");
   }

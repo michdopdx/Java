@@ -30,7 +30,7 @@ public class XmlDumper implements AirlineDumper<Airline> {
 
 		/**
 		 * Constructor to create a XmlDumper object.
-		 * @param file Specified file where to dump.
+		 * @param writer Specified file where to dump.
 		 */
 		public XmlDumper(Writer writer) {
 				this.write = writer;

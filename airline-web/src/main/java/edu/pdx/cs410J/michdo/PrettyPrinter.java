@@ -1,46 +1,71 @@
 package edu.pdx.cs410J.michdo;
 
 import com.google.common.annotations.VisibleForTesting;
+import edu.pdx.cs410J.AirlineDumper;
+import edu.pdx.cs410J.AirportNames;
 
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.text.DateFormat;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
-public class PrettyPrinter {
+/**
+ * Class <code>PrettyPrinter</code> used to Pretty print Airline and its Flights into file
+ *
+ * @author Michael Do
+ */
+public class PrettyPrinter implements AirlineDumper<Airline> {
   private final Writer writer;
 
-  @VisibleForTesting
-  static String formatWordCount(int count )
-  {
-    return String.format( "Dictionary on server contains %d words", count );
-  }
 
-  @VisibleForTesting
-  static String formatDictionaryEntry(String word, String definition )
-  {
-    return String.format("  %s -> %s", word, definition);
-  }
-
-
+  /**
+   * Constructor for Pretty Printer
+   * @param writer A Writer
+   */
   public PrettyPrinter(Writer writer) {
     this.writer = writer;
   }
 
-  public void dump(Map<String, String> dictionary) {
-    try (
-      PrintWriter pw = new PrintWriter(this.writer)
-    ) {
+  /**
+   * Takes in a date and uses DateFormat to then change the formatting of given date.
+   * @param date The date.
+   * @return A formatted string using DateFormat along with full date and short time.
+   */
+  public String prettyFormat (Date date) {
+    DateFormat format = DateFormat.getDateTimeInstance(DateFormat.FULL,DateFormat.SHORT, Locale.US);
+    return format.format(date);
+  }
 
-      pw.println(formatWordCount(dictionary.size()));
+  /**
+   * Write content from an airline into a file using pretty print
+   *
+   * @param airline Airline object which will be stored into file
+   */
+  @Override
 
-      for (Map.Entry<String, String> entry : dictionary.entrySet()) {
-        String word = entry.getKey();
-        String definition = entry.getValue();
-        pw.println(formatDictionaryEntry(word, definition));
-      }
+  public void dump(Airline airline) {
 
-      pw.flush();
+    Collection<Flight> listOfFlights = airline.getFlights();
+    PrintWriter pw = new PrintWriter(this.writer);
+    pw.println("Flights for AirLine: " + airline.getName());
+    pw.println("******************************************");
+    for (Flight flight : listOfFlights) {
+      String srcCode = AirportNames.getName(flight.getSource());
+      String destCode = AirportNames.getName(flight.getDestination());
+
+      pw.println("Flight Number: " + flight.getNumber());
+      pw.println("Departing Airport: " + flight.getSource() + " - " + srcCode);
+      pw.println("Departing Data & Time: " + prettyFormat(flight.getDeparture()));
+      pw.println("Arriving Airport: " + flight.getDestination() + " - " + destCode);
+      pw.println("Arriving Data & Time: " + prettyFormat(flight.getArrival()));
+      pw.println("Flight Duration: " +  flight.getFlightDuration() + " Minutes");
+      pw.println("----------------------------------------");
+
     }
-
+    pw.println("******************************************");
+    pw.flush();
   }
 }
