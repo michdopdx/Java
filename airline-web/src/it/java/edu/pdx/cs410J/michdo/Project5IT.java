@@ -86,7 +86,6 @@ class Project5IT extends InvokeMainTestCase {
         String flightDest = "PDX";
         MainMethodResult result  = invokeMain(Project5.class, "-port", PORT, "-print","-host",HOSTNAME ,"Airline",flightNumber,flightSrc,"09/16/2000", "10:00", "am", flightDest, "09/17/2000", "10:00", "am");
         assertThat(result.getTextWrittenToStandardOut(),containsString("Airline: Flight 11 departs PDX at 9/16/00, 10:00 AM arrives PDX at 9/17/00, 10:00 AM"));
-
     }
 
     @Test
@@ -172,4 +171,18 @@ class Project5IT extends InvokeMainTestCase {
         MainMethodResult result = invokeMain(Project5.class,"-port", PORT, "-host",HOSTNAME,"-search","JetBlue", "PDX","PDX","helloworld");
         assertThat(result.getTextWrittenToStandardError(), CoreMatchers.containsString("Search Command does not support [JetBlue, PDX, PDX, helloworld]"));
     }
+
+
+    @Test
+    void testCase1() {
+        MainMethodResult result = invokeMain(Project5.class, "-README");
+        assertThat(result.getTextWrittenToStandardError(),containsString("* -README") );
+    }
+    @Test
+    void testCase2() {
+        MainMethodResult result = invokeMain(Project5.class);
+        assertThat(result.getTextWrittenToStandardError(),containsString("usage: java Project5 host port [airlineName] [flightNumber] [flightSrc] [flightDepart] [flightDest] [flightArrive]") );
+    }
+
+
 }

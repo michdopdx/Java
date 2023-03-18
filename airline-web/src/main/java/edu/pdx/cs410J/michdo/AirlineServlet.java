@@ -174,12 +174,14 @@ public class AirlineServlet extends HttpServlet {
    */
   private void writeFlightSrcDest(String airlineName,String src,String dest,HttpServletResponse response ) throws IOException
   {
-      Airline airline = this.airlineDictionary.get(airlineName);
-
       if (airlineName == null || src == null || dest == null) {
           response.setStatus(HttpServletResponse.SC_NOT_FOUND);
       }
-      else {
+
+      Airline airline;
+      try {
+          airline = this.airlineDictionary.get(airlineName);
+
           PrintWriter pw = response.getWriter();
           Airline filteredAirlineWithSrcAndDest = new Airline(airlineName);
           Collection<Flight> listOfFlights = airline.getFlights();
@@ -193,6 +195,9 @@ public class AirlineServlet extends HttpServlet {
           XmlDumper dumpXml = new XmlDumper(pw);
           dumpXml.dump(filteredAirlineWithSrcAndDest);
 
+      }catch (NullPointerException e) {
+          response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+          return;
       }
       response.setStatus( HttpServletResponse.SC_OK );
   }

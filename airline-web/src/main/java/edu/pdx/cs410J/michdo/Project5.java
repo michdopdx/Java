@@ -299,7 +299,7 @@ public class Project5 {
         PrintStream err = System.err;
         err.println("** " + message);
         err.println();
-        err.println("usage: java Project5 host port [word] [definition]");
+        err.println("usage: java Project5 host port [airlineName] [flightNumber] [flightSrc] [flightDepart] [flightDest] [flightArrive]");
         err.println("  host         Host of web server");
         err.println("  port         Port of web server");
         err.println("  word         Word in dictionary");
