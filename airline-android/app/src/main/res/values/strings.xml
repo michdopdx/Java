@@ -1,3 +1,43 @@
 <resources>
     <string name="app_name">Airline</string>
+    <string name="hello">Hello class!</string>
+    <string name="BtnClickSubmit">Click me!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="timeFormat">HH:MM AM/PM</string>
+    <string name="dateFormat">MM/DD/YYYY</string>
+    <string name="add_airline_and_flights">Add Airline and Flights</string>
+    <string name="airline_name">Airline Name:</string>
+    <string name="name_of_airline">Name of Airline</string>
+    <string name="flight_number">Flight Number:</string>
+    <string name="airport_source_code">Airport Source Code:</string>
+    <string name="flight_source_code">Flight Source Code</string>
+    <string name="flight_departure_time">Flight Departure Time:</string>
+    <string name="airport_destination_code">Airport Destination Code:</string>
+    <string name="flight_destination_code">Flight Destination Code</string>
+    <string name="flight_arrival_date">Flight Arrival Date:</string>
+    <string name="flight_arrival_time">Flight Arrival Time:</string>
+    <string name="add">Add</string>
+    <string name="flight_departure_date">Flight Departure Date:</string>
+    <string name="flightnumber">Flight Number</string>
+    <string name="description">Description</string>
+    <string name="readme">ReadMe</string>
+    <string name="michael_do_airline_application">Michael Do Airline Application</string>
+    <string name="ReadmeDes">This is an Android Application that allows users to add airlines and flights, and the users can search for flights from a given airline. To add airline and flight navigate to the second item in the navigation bar. To search for flights from a given airline navigate to the third item in the navigation bar. Lastly, the last item is for help.</string>
+    <string name="usage">Usage:</string>
+    <string name="homeUsageDes">Home - Contains Greetings and brief explanation of the app</string>
+    <string name="YoutubeVideoUsedForNavBar">navbar fragment Layout - https://www.youtube.com/watch?v=Bb8SgfI4Cm4</string>
+    <string name="resource">Resource:</string>
+    <string name="helpUsage">Help - In this tab will be a readme which describe the application and how to use it.</string>
+    <string name="searchUsage">Search - On this tab users will be able to enter in the airline name they want to know the flights to.</string>
+    <string name="addUsage">Add - On this tab users will be able to enter in required information about airline and flight. Once information has been entered an airline and flight will be created.</string>
+    <string name="greetings">Welcome To Airline Application</string>
+    <string name="desProject">Greetings and welcome to my Airline App. In this app, users can add airlines and any associated flights and search for flights that belong to a specific airline. There are four Icons on the navigation bar below. The first icon is the home page, the second is Add the third is Search and lastly, Help. Add is used for adding airlines and flights, search is used for searching airlines, and help is for helpful information.</string>
+    <string name="airlinename">Airline Name:</string>
+    <string name="enter_airline_name_hint">Enter Airline Name</string>
+    <string name="search">Search</string>
+    <string name="dest_code">Dest Code</string>
+    <string name="src_code">Src Code</string>
+    <string name="airport_code">Airport Code:</string>
+    <string name="flight_num">Flight Number</string>
 </resources>

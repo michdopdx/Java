@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="Home" android:icon="@drawable/baseline_home_24" android:id = "@+id/home" app:showAsAction="always"/>
+    <item android:title="Add" android:icon="@drawable/baseline_airlines_24" android:id ="@+id/add" app:showAsAction="always"/>
+    <item android:title="Search Airlines" android:icon="@drawable/baseline_search_24" android:id ="@+id/search"/>
+    <item android:title="Help ?" android:icon="@drawable/baseline_help_24" android:id ="@+id/help"/>
+
+</menu>
